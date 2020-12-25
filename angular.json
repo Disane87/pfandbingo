@@ -1,0 +1,143 @@
+{
+  "version": 1,
+  "projects": {
+    "web-ui": {
+      "projectType": "application",
+      "root": "apps/web-ui",
+      "sourceRoot": "apps/web-ui/src",
+      "prefix": "pfandbingo",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/apps/web-ui",
+            "index": "apps/web-ui/src/index.html",
+            "main": "apps/web-ui/src/main.ts",
+            "polyfills": "apps/web-ui/src/polyfills.ts",
+            "tsConfig": "apps/web-ui/tsconfig.app.json",
+            "aot": true,
+            "assets": ["apps/web-ui/src/favicon.ico", "apps/web-ui/src/assets"],
+            "styles": ["apps/web-ui/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/web-ui/src/environments/environment.ts",
+                  "with": "apps/web-ui/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "web-ui:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "web-ui:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "web-ui:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/web-ui/src/**/*.ts",
+              "apps/web-ui/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/web-ui"],
+          "options": {
+            "jestConfig": "apps/web-ui/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "web-ui-e2e": {
+      "root": "apps/web-ui-e2e",
+      "sourceRoot": "apps/web-ui-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/web-ui-e2e/cypress.json",
+            "tsConfig": "apps/web-ui-e2e/tsconfig.e2e.json",
+            "devServerTarget": "web-ui:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "web-ui:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/web-ui-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/angular"
+  },
+  "schematics": {
+    "@nrwl/angular": {
+      "application": {
+        "linter": "eslint"
+      },
+      "library": {
+        "linter": "eslint"
+      },
+      "storybook-configuration": {
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/angular:application": {
+      "unitTestRunner": "jest",
+      "e2eTestRunner": "cypress"
+    },
+    "@nrwl/angular:library": {
+      "unitTestRunner": "jest"
+    },
+    "@nrwl/angular:component": {
+      "style": "scss"
+    }
+  },
+  "defaultProject": "web-ui"
+}
