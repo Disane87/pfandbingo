@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "pfandbingo": {
+      "hosting": {
+        "web-ui": [
+          "pfandbingo"
+        ]
+      }
+    }
+  }
+}

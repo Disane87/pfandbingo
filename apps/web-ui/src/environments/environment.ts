@@ -4,6 +4,16 @@
 
 export const environment = {
   production: false,
+  firebase: {
+    apiKey: 'AIzaSyAWbOobo704di7A22mEpJKw_59suwPdwRs',
+    authDomain: 'pfandbingo.firebaseapp.com',
+    databaseURL: 'https://pfandbingo-default-rtdb.europe-west1.firebasedatabase.app',
+    projectId: 'pfandbingo',
+    storageBucket: 'pfandbingo.appspot.com',
+    messagingSenderId: '142391257635',
+    appId: '1:142391257635:web:06692dadae313ccf929f96',
+    measurementId: 'G-GD07V9F7K9'
+  }
 };
 
 /*
