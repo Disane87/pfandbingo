@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { TodosService } from './todos/state/todos.service';
-import { TodosQuery } from './todos/state/todos.query';
 import { Observable } from 'rxjs';
+import { AuthQuery } from './auth/state/auth.query';
 import { Todo } from './todos/state/todo.model';
+import { TodosQuery } from './todos/state/todos.query';
+import { TodosService } from './todos/state/todos.service';
 
 @Component({
   selector: 'pfandbingo-root',
@@ -13,7 +14,8 @@ export class AppComponent {
   title = 'web-ui';
 
   public todos$: Observable<Todo[]>;
-  constructor(private service: TodosService, private query: TodosQuery) { }
+  constructor(private service: TodosService, private query: TodosQuery, private auth: AuthQuery) { }
+  public loggedIn$ = this.auth.profile$;
 
   ngOnInit() {
     // Subscribe to the collection

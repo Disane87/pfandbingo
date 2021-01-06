@@ -79,8 +79,8 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
 
 
 @NgModule({
-    imports: [],
     exports: [
+
         NzAffixModule,
         NzAlertModule,
         NzAnchorModule,
@@ -109,6 +109,7 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
         NzIconModule,
         NzImageModule,
         NzInputModule,
+
         NzInputNumberModule,
         NzLayoutModule,
         NzListModule,

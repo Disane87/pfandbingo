@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { TodosStore, TodosState } from './todos.store';
 import { CollectionConfig, CollectionService } from 'akita-ng-fire';
+import { TodosState, TodosStore } from './todos.store';
 
 @Injectable({ providedIn: 'root' })
-@CollectionConfig({ path: 'todos' })
+@CollectionConfig({ path: 'todos', })
 export class TodosService extends CollectionService<TodosState> {
 
   constructor(store: TodosStore) {

@@ -1,38 +1,44 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgModule } from '@angular/core';
-
-import { AppComponent } from './app.component';
+import { registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import { TranslocoRootModule } from './transloco/transloco-root.module';
-
+import de from '@angular/common/locales/en';
+import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
-import { environment } from '../environments/environment';
 import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-
-
-
-import de from '@angular/common/locales/en';
-
-import { registerLocaleData } from '@angular/common';
-import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
+import { AngularFireStorageModule, BUCKET } from '@angular/fire/storage';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AkitaNgRouterStoreModule } from '@datorama/akita-ng-router-store';
+import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
+import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
-import { NgZorroModule } from '../../../../.history/apps/web-ui/src/app/ng-zorro-module_20210104090611';
+import { AppComponent } from './app.component';
+import { ImageUploadComponent } from './image-upload/image-upload.component';
+import { LayoutModule } from './layout/layout.module';
+import { NgZorroModule } from './ng-zorro-module';
+import { TranslocoRootModule } from './transloco/transloco-root.module';
 
 registerLocaleData(de);
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [BrowserModule, BrowserAnimationsModule, HttpClientModule, TranslocoRootModule, 
+  declarations: [AppComponent, ImageUploadComponent],
+  imports: [BrowserModule, BrowserAnimationsModule, HttpClientModule, TranslocoRootModule,
     environment.production ? [] : AkitaNgDevtools.forRoot(),
     AppRoutingModule,
     AkitaNgRouterStoreModule.forRoot(),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAnalyticsModule,
     AngularFirestoreModule,
-    NgZorroModule
+    AngularFireStorageModule,
+    NgZorroModule,
+    LayoutModule,
+    FormsModule,
+    ReactiveFormsModule,
+
+  ],
+  providers: [
+    { provide: BUCKET, useValue: environment.firebase.storageBucket }
 
   ],
   bootstrap: [AppComponent],
