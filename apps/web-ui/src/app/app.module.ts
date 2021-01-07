@@ -26,7 +26,7 @@ registerLocaleData(de);
   imports: [BrowserModule, BrowserAnimationsModule, HttpClientModule, TranslocoRootModule,
     environment.production ? [] : AkitaNgDevtools.forRoot(),
     AppRoutingModule,
-    AkitaNgRouterStoreModule.forRoot(),
+    AkitaNgRouterStoreModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAnalyticsModule,
     AngularFirestoreModule,

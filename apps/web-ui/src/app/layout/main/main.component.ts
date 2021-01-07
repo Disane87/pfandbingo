@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../../auth/state/auth.service';
 
 @Component({
@@ -9,10 +10,14 @@ import { AuthService } from '../../auth/state/auth.service';
 })
 export class MainComponent {
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService, private router: Router
+  ) { }
+
+  isCollapsed = false;
 
 
   logout() {
-    this.auth.signOut().then();
+    debugger;
+    this.auth.signOut().then(() => this.router.navigate(['auth/login']));
   }
 }

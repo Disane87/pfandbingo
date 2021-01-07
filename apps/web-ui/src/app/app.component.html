@@ -1,6 +1,1 @@
-<!-- {{ (loggedIn$ | async | json) }} -->
-<pfandbingo-main *ngIf="(loggedIn$ | async); else loggedOut"></pfandbingo-main>
-
-<ng-template #loggedOut>
-    <router-outlet></router-outlet>
-</ng-template>
+<router-outlet></router-outlet>
