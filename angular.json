@@ -130,7 +130,8 @@
     }
   },
   "cli": {
-    "defaultCollection": "@datorama/akita"
+    "defaultCollection": "@datorama/akita",
+    "analytics": "ae100b04-1a19-42d5-bde4-efa7f4445fd0"
   },
   "schematics": {
     "@nrwl/angular": {
@@ -155,7 +156,7 @@
       "style": "scss"
     },
     "@schematics/angular:component": {
-      "styleext": "scss",
+      "style": "scss",
       "changeDetection": "OnPush"
     }
   },

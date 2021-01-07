@@ -18,11 +18,12 @@ import { ImageUploadComponent } from './image-upload/image-upload.component';
 import { LayoutModule } from './layout/layout.module';
 import { NgZorroModule } from './ng-zorro-module';
 import { TranslocoRootModule } from './transloco/transloco-root.module';
+import { TodosComponent } from './todos/todos/todos.component';
 
 registerLocaleData(de);
 
 @NgModule({
-  declarations: [AppComponent, ImageUploadComponent],
+  declarations: [AppComponent, ImageUploadComponent, TodosComponent],
   imports: [BrowserModule, BrowserAnimationsModule, HttpClientModule, TranslocoRootModule,
     environment.production ? [] : AkitaNgDevtools.forRoot(),
     AppRoutingModule,

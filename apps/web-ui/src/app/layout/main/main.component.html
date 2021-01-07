@@ -56,58 +56,70 @@
 </nz-layout> -->
 
 <nz-layout class="w-screen h-screen">
-    <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
-        <div class="logo"></div>
-        <ul nz-menu nzTheme="dark" nzMode="inline">
-            <li nz-submenu nzTitle="User" nzIcon="user">
-                <ul>
-                    <li nz-menu-item>Tom</li>
-                    <li nz-menu-item>Bill</li>
-                    <li nz-menu-item>Alex</li>
-                </ul>
-            </li>
-            <li nz-submenu nzTitle="Team" nzIcon="team">
-                <ul>
-                    <li nz-menu-item>Team 1</li>
-                    <li nz-menu-item>Team 2</li>
-                </ul>
-            </li>
-            <li nz-menu-item>
-                <i nz-icon nzType="file"></i>
-                <span>File</span>
-            </li>
+  <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+    <div class="logo"></div>
+    <ul nz-menu nzTheme="dark" nzMode="inline">
+      <li nz-submenu nzTitle="User" nzIcon="user">
+        <ul>
+          <li nz-menu-item>Tom</li>
+          <li nz-menu-item>Bill</li>
+          <li nz-menu-item>Alex</li>
         </ul>
-    </nz-sider>
-    <nz-layout>
-        <nz-header class="flex flex-column">
-            <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-                (click)="isCollapsed = !isCollapsed"></i>
+      </li>
+      <li nz-submenu nzTitle="Team" nzIcon="team">
+        <ul>
+          <li nz-menu-item>Team 1</li>
+          <li nz-menu-item>Team 2</li>
+        </ul>
+      </li>
+      <li nz-menu-item>
+        <i nz-icon nzType="file"></i>
+        <span>File</span>
+      </li>
+    </ul>
+  </nz-sider>
+  <nz-layout>
+    <nz-header class="flex flex-column">
+      <i
+        class="trigger"
+        nz-icon
+        [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+        (click)="isCollapsed = !isCollapsed"
+      ></i>
 
-            <ul nz-menu nzMode="horizontal" class="w-full header-menu">
-                <li nz-menu-item nzSelected>nav 1</li>
-                <li nz-menu-item>nav 2</li>
-                <li nz-menu-item>nav 3</li>
-
-            </ul>
-            <div class="self-end mr-3">
-                <i class="cursor-pointer" nz-icon [nzType]="'logout'" (click)="logout()"></i>
-
-            </div>
-            <div class="self-end mr-3">
-                <nz-avatar nzIcon="user"></nz-avatar>
-
-            </div>
-
-        </nz-header>
-        <nz-content>
-            <nz-breadcrumb>
-                <nz-breadcrumb-item>User</nz-breadcrumb-item>
-                <nz-breadcrumb-item>Bill</nz-breadcrumb-item>
-            </nz-breadcrumb>
-            <div class="inner-content">
-                <router-outlet></router-outlet>
-            </div>
-        </nz-content>
-        <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
-    </nz-layout>
+      <ul nz-menu nzMode="horizontal" nzMatchRouter class="w-full header-menu">
+        <li
+          nz-menu-item
+          nzSelected
+          routerLink="upload"
+          nzMatchRouterExact="true"
+        >
+          Upload
+        </li>
+        <li nz-menu-item routerLink="./todos">Todos</li>
+        <!-- <li nz-menu-item>nav 3</li> -->
+      </ul>
+      <div class="self-end mr-3">
+        <i
+          class="cursor-pointer"
+          nz-icon
+          [nzType]="'logout'"
+          (click)="logout()"
+        ></i>
+      </div>
+      <div class="self-end mr-3">
+        <nz-avatar nzIcon="user"></nz-avatar>
+      </div>
+    </nz-header>
+    <nz-content>
+      <nz-breadcrumb>
+        <nz-breadcrumb-item>User</nz-breadcrumb-item>
+        <nz-breadcrumb-item>Bill</nz-breadcrumb-item>
+      </nz-breadcrumb>
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
+    </nz-content>
+    <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
+  </nz-layout>
 </nz-layout>

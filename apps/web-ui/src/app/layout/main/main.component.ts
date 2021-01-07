@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth/state/auth.service';
 
@@ -10,14 +10,14 @@ import { AuthService } from '../../auth/state/auth.service';
 })
 export class MainComponent {
 
-  constructor(private auth: AuthService, private router: Router
+  constructor(private auth: AuthService, private router: Router, @Inject('persistStorage') private persistStorage
   ) { }
 
   isCollapsed = false;
 
 
   logout() {
-    debugger;
     this.auth.signOut().then(() => this.router.navigate(['auth/login']));
+    this.persistStorage.clearStore();
   }
 }
