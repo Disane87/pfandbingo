@@ -8,12 +8,13 @@ import { AuthQuery } from '../state/auth.query';
 import { AuthService } from '../state/auth.service';
 
 @Component({
-  selector: 'pfandbingo-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  selector: 'pfandbingo-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class LoginComponent implements OnInit {
+export class SignupComponent implements OnInit {
+
   constructor(private fb: FormBuilder, public authService: AuthService, private authQuery: AuthQuery, private msg: NzMessageService, private router: Router) { }
   validateForm!: FormGroup;
   loginError$ = new Subject<string>();
@@ -22,7 +23,7 @@ export class LoginComponent implements OnInit {
 
   authPending$ = this.authQuery.selectLoading();
 
-
+  public isPasswordSame: boolean;
 
   signIn(): void {
 
@@ -30,7 +31,7 @@ export class LoginComponent implements OnInit {
     const password = this.validateForm.get('password').value;
 
     this.authService
-      .signin(userName, password)
+      .signup(userName, password)
       .then(() => this.router.navigate(['pfingo']))
       // .then((user: firebase.auth.UserCredential) => {
       // })
@@ -42,10 +43,19 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      userName: [null, [Validators.required]],
+      userName: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required]],
+      passwordRepeat: [null, [Validators.required, this.passwordsMatchValidator]],
       remember: [true]
     });
   }
 
+
+
+  private passwordsMatchValidator(form: FormGroup) {
+    if (form.get('password') && form.get('passwordRepeat')) {
+      return form.get('password').value === form.get('passwordRepeat').value ? null : { mismatch: true };
+    }
+    return null;
+  }
 }

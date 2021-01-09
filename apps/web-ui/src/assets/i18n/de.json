@@ -1,1 +1,7 @@
-{}
+{
+    "LOGIN": {
+        "WELCOME": "Willkommen!",
+        "EMAIL": "E-Mail",
+        "PASSWORD": "Passwort"
+    }
+}

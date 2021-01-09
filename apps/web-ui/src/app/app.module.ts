@@ -14,16 +14,16 @@ import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ImageUploadComponent } from './image-upload/image-upload.component';
+import { ImageUploadModule } from './image-upload/image-upload.module';
 import { LayoutModule } from './layout/layout.module';
 import { NgZorroModule } from './ng-zorro-module';
-import { TranslocoRootModule } from './transloco/transloco-root.module';
 import { TodosComponent } from './todos/todos/todos.component';
+import { TranslocoRootModule } from './transloco/transloco-root.module';
 
 registerLocaleData(de);
 
 @NgModule({
-  declarations: [AppComponent, ImageUploadComponent, TodosComponent],
+  declarations: [AppComponent, TodosComponent],
   imports: [BrowserModule, BrowserAnimationsModule, HttpClientModule, TranslocoRootModule,
     environment.production ? [] : AkitaNgDevtools.forRoot(),
     AppRoutingModule,
@@ -36,6 +36,8 @@ registerLocaleData(de);
     LayoutModule,
     FormsModule,
     ReactiveFormsModule,
+    TranslocoRootModule,
+    ImageUploadModule
 
   ],
   providers: [

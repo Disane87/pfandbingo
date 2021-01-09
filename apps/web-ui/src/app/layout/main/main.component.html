@@ -1,125 +1,136 @@
-<!-- <nz-layout class="w-screen h-screen">
-    <nz-header class="flex flex-column">
-        <div class="logo" style="width:158px"></div>
-        <ul nz-menu nzTheme="dark" nzMode="horizontal" class="w-full header-menu">
-            <li nz-menu-item nzSelected>nav 1</li>
-            <li nz-menu-item>nav 2</li>
-            <li nz-menu-item>nav 3</li>
+<div class="flex-row d-flex">
+    <nav class="bg-gray-800 shadow">
+        <div class="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
+            <div class="relative flex items-center justify-between h-16">
+                <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                    <!-- Mobile menu button-->
+                    <button
+                        class="inline-flex items-center justify-center p-2 text-gray-400 rounded-md hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                        aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <!-- Icon when menu is closed. -->
+                        <!--
+                     Heroicon name: menu
+                     
+                     Menu open: "hidden", Menu closed: "block"
+                     -->
+                        <svg class="block w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <!-- Icon when menu is open. -->
+                        <!--
+                     Heroicon name: x
+                     
+                     Menu open: "block", Menu closed: "hidden"
+                     -->
+                        <svg class="hidden w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start">
+                    <!-- Logo -->
+                    <div class="flex items-center flex-shrink-0">
+                        <img class="block w-auto h-8 lg:hidden"
+                            src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="Workflow">
+                        <img class="hidden w-auto h-8 lg:block"
+                            src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
+                            alt="Workflow">
+                    </div>
+                    <!-- Links -->
+                    <div class="hidden sm:block sm:ml-6">
+                        <div class="flex space-x-4">
+                            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+                            <!-- <a class="px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md" routerLink="dashboard">Dashboard</a> -->
+                            <a class="px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
+                                routerLink="pfingo" routerLinkActive="text-white bg-gray-900 rounded-md">Pfingos</a>
+                            <a class="px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
+                                routerLink="todos" routerLinkActive="text-white bg-gray-900 rounded-md">Todos</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Buttons -->
+                <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 
-        </ul>
-        <div>
-            <nz-avatar nzSize="large" nzIcon="user"></nz-avatar>
-            <i nz-icon [nzType]="'logout'" (click)="logout()"></i>
+                    <div class="inline-flex rounded-md shadow">
+                        <a href="#"
+                            class="inline-flex items-center justify-center px-3 py-1 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700">
+                            + Upload
+                        </a>
+                    </div>
+                    <!-- Profile dropdown -->
+                    <div class="relative mx-3">
+                        <div>
+                            <button
+                                class="flex text-sm bg-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                                id="user-menu" aria-haspopup="true">
+                                <span class="sr-only">Open user menu</span>
+                                <!-- <nz-avatar nzIcon="user" [nzSrc]="(profile$ | async).photoURL" nz-dropdown [nzDropdownMenu]="menu">
+                           </nz-avatar>
+                           
+                           <nz-dropdown-menu #menu="nzDropdownMenu">
+                               <ul nz-menu>
+                                   <li nz-menu-item (click)="openUpload('avatar')">Upload avatar
+                                   </li>
+                           
+                               </ul>
+                           </nz-dropdown-menu> -->
+                                <img class="w-8 h-8 rounded-full shadow-inner" [src]="(profile$ | async)?.photoURL"
+                                    alt="" nz-dropdown [nzDropdownMenu]="menu">
+                            </button>
+                        </div>
+                        <!--
+                     Profile dropdown panel, show/hide based on dropdown state.
+                     
+                     Entering: "transition ease-out duration-100"
+                       From: "transform opacity-0 scale-95"
+                       To: "transform opacity-100 scale-100"
+                     Leaving: "transition ease-in duration-75"
+                       From: "transform opacity-100 scale-100"
+                       To: "transform opacity-0 scale-95"
+                     -->
+                        <nz-dropdown-menu #menu="nzDropdownMenu"
+                            class="absolute right-0 w-48 py-1 mt-2 origin-top-right bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5"
+                            role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
+                            <!-- <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem">Your
+                        Profile</a> -->
+                            <ul nz-menu>
+                                <li class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem"
+                                    (click)="openUpload('avatar')">Image
+                                    upload
+                                </li>
+                                <li class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem"
+                                    (click)="logout()">Logout</li>
+                            </ul>
+                        </nz-dropdown-menu>
+                    </div>
+                </div>
+            </div>
         </div>
-    </nz-header>
-    <nz-layout>
-        <nz-sider nzWidth="200px" nzTheme="light">
-            <ul nz-menu nzMode="inline" class="sider-menu">
-                <li nz-submenu nzOpen nzIcon="user" nzTitle="subnav 1">
-                    <ul>
-                        <li nz-menu-item nzSelected>option1</li>
-                        <li nz-menu-item>option2</li>
-                        <li nz-menu-item>option3</li>
-                        <li nz-menu-item>option4</li>
-                    </ul>
-                </li>
-                <li nz-submenu nzTitle="subnav 2" nzIcon="laptop">
-                    <ul>
-                        <li nz-menu-item>option5</li>
-                        <li nz-menu-item>option6</li>
-                        <li nz-menu-item>option7</li>
-                        <li nz-menu-item>option8</li>
-                    </ul>
-                </li>
-                <li nz-submenu nzTitle="subnav 3" nzIcon="notification">
-                    <ul>
-                        <li nz-menu-item>option9</li>
-                        <li nz-menu-item>option10</li>
-                        <li nz-menu-item>option11</li>
-                        <li nz-menu-item>option12</li>
-                    </ul>
-                </li>
-            </ul>
-        </nz-sider>
-        <nz-layout class="inner-layout">
-            <nz-breadcrumb>
-                <nz-breadcrumb-item>Home</nz-breadcrumb-item>
-                <nz-breadcrumb-item>List</nz-breadcrumb-item>
-                <nz-breadcrumb-item>App</nz-breadcrumb-item>
-            </nz-breadcrumb>
-            <nz-content>
-                <router-outlet></router-outlet>
-
-            </nz-content>
-        </nz-layout>
-    </nz-layout>
-</nz-layout> -->
-
-<nz-layout class="w-screen h-screen">
-  <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
-    <div class="logo"></div>
-    <ul nz-menu nzTheme="dark" nzMode="inline">
-      <li nz-submenu nzTitle="User" nzIcon="user">
-        <ul>
-          <li nz-menu-item>Tom</li>
-          <li nz-menu-item>Bill</li>
-          <li nz-menu-item>Alex</li>
-        </ul>
-      </li>
-      <li nz-submenu nzTitle="Team" nzIcon="team">
-        <ul>
-          <li nz-menu-item>Team 1</li>
-          <li nz-menu-item>Team 2</li>
-        </ul>
-      </li>
-      <li nz-menu-item>
-        <i nz-icon nzType="file"></i>
-        <span>File</span>
-      </li>
-    </ul>
-  </nz-sider>
-  <nz-layout>
-    <nz-header class="flex flex-column">
-      <i
-        class="trigger"
-        nz-icon
-        [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-        (click)="isCollapsed = !isCollapsed"
-      ></i>
-
-      <ul nz-menu nzMode="horizontal" nzMatchRouter class="w-full header-menu">
-        <li
-          nz-menu-item
-          nzSelected
-          routerLink="upload"
-          nzMatchRouterExact="true"
-        >
-          Upload
-        </li>
-        <li nz-menu-item routerLink="./todos">Todos</li>
-        <!-- <li nz-menu-item>nav 3</li> -->
-      </ul>
-      <div class="self-end mr-3">
-        <i
-          class="cursor-pointer"
-          nz-icon
-          [nzType]="'logout'"
-          (click)="logout()"
-        ></i>
-      </div>
-      <div class="self-end mr-3">
-        <nz-avatar nzIcon="user"></nz-avatar>
-      </div>
-    </nz-header>
-    <nz-content>
-      <nz-breadcrumb>
-        <nz-breadcrumb-item>User</nz-breadcrumb-item>
-        <nz-breadcrumb-item>Bill</nz-breadcrumb-item>
-      </nz-breadcrumb>
-      <div class="inner-content">
+        <!--
+         Mobile menu, toggle classes based on menu state.
+         
+         Menu open: "block", Menu closed: "hidden"
+         -->
+        <div class="hidden sm:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+                <a href="#"
+                    class="block px-3 py-2 text-base font-medium text-white bg-gray-900 rounded-md">Dashboard</a>
+                <a href="#"
+                    class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white">Team</a>
+                <a href="#"
+                    class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white">Projects</a>
+                <a href="#"
+                    class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white">Calendar</a>
+            </div>
+        </div>
+    </nav>
+    <div class="h-full px-10 pt-8 content">
         <router-outlet></router-outlet>
-      </div>
-    </nz-content>
-    <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
-  </nz-layout>
-</nz-layout>
+    </div>
+</div>

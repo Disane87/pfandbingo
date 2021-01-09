@@ -10,4 +10,12 @@ export class AuthQuery extends Query<AuthState> {
     constructor(protected store: AuthStore) {
         super(store);
     }
+
+    public get userId(): string {
+        return this.getValue().uid;
+    }
+
+    getUserId() {
+
+    }
 }

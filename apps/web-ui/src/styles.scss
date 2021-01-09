@@ -2,5 +2,12 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 /* You can add global styles to this file, and also import other style files */
-@import "~ng-zorro-antd/ng-zorro-antd.min.css";
-@import "~ng-zorro-antd/src/ng-zorro-antd.min.css";
+@import '~ng-zorro-antd/ng-zorro-antd.min.css';
+@import '~ng-zorro-antd/src/ng-zorro-antd.min.css';
+
+body.debug div {
+  @apply bg-purple-300;
+  @apply opacity-90;
+  @apply border-purple-400;
+  @apply border-2;
+}

@@ -4,7 +4,7 @@ import { RealTimeConfig, RealTimeService } from 'akita-ng-fire';
 import { TodosState, TodosStore } from './todos.store';
 
 @Injectable({ providedIn: 'root' })
-@RealTimeConfig({ nodeName: 'todos' })
+@RealTimeConfig({ nodeName: 'todos', })
 export class TodosService extends RealTimeService<TodosState> {
 
   constructor(store: TodosStore, db: AngularFireDatabase) {

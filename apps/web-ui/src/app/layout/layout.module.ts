@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { ImageUploadModule } from '../image-upload/image-upload.module';
 import { NgZorroModule } from '../ng-zorro-module';
 import { MainComponent } from './main/main.component';
 
@@ -11,7 +12,8 @@ import { MainComponent } from './main/main.component';
   imports: [
     CommonModule,
     NgZorroModule,
-    RouterModule
+    RouterModule,
+    ImageUploadModule
   ]
 })
 export class LayoutModule { }

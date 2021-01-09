@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzUploadChangeParam, NzUploadFile, NzUploadXHRArgs } from 'ng-zorro-antd/upload';
+import { Subject } from 'rxjs';
 import { last, switchMap, tap } from 'rxjs/operators';
 
 @Component({
@@ -10,11 +11,27 @@ import { last, switchMap, tap } from 'rxjs/operators';
   styleUrls: ['./image-upload.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ImageUploadComponent {
+export class ImageUploadComponent implements OnInit {
   uploading = false;
   fileList: NzUploadFile[] = [];
 
+  @Input() path = '';
+  @Input() fileName = '';
+
+  @Input() fileTypes = '*';
+
+  @Input() title = 'Werfe hier einfach ein Bild hin oder klicke zum Hochladen';
+
+  @Output() fileUploaded = new EventEmitter<string>();
+
+  uploadComplete$ = new Subject<string>();
+
   constructor(private msg: NzMessageService, private fireStorage: AngularFireStorage) { }
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+  }
 
   beforeUpload = (file: NzUploadFile): boolean => {
     this.fileList = this.fileList.concat(file);
@@ -23,17 +40,17 @@ export class ImageUploadComponent {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   customUploadReq = (item: NzUploadXHRArgs) => {
-
     const fileName = item.file.name;
+    const fileExtension = fileName.substr(fileName.lastIndexOf('.') + 1);
+    const fileNameWithoutExtension = fileName.substr(0, fileName.lastIndexOf('.'));
+    const uploadPath = `${this.path}/${this.fileName || fileNameWithoutExtension}.${fileExtension}`;
 
-    const upload = this.fireStorage.upload(fileName, item.file);
-    const fileRef = this.fireStorage.ref(fileName);
+    const upload = this.fireStorage.upload(uploadPath, item.file);
+    const fileRef = this.fireStorage.ref(uploadPath);
     upload.percentageChanges().subscribe(percent => {
       // this.msg.success('Upload pending ' + Math.trunc(percent) + '%');
       item.onProgress({ percent: Math.trunc(percent) }, item.file)
     })
-
-    const id = this.msg.loading('Uploading', { nzDuration: 0 }).messageId;
 
     upload.snapshotChanges().pipe(
 
@@ -41,18 +58,15 @@ export class ImageUploadComponent {
       tap(() => item.onSuccess('Complete', item.file, null)),
       switchMap(() => fileRef.getDownloadURL()),
       tap(downloadUrl => {
-        this.msg.remove(id);
-        this.msg.success(`Uploaded to ${downloadUrl}`);
+        this.uploadComplete$.next(downloadUrl);
+        this.fileUploaded.emit(downloadUrl);
+        this.fileList = [];
       })
     ).subscribe()
 
 
-    // return from(upload.then(res => {
-    //   this.msg.success('Upload complete');
-    // }).catch(err => {
-    //   this.msg.success('Upload Error');
-    // }))
 
+    return this.uploadComplete$;
   }
 
   handleChange(info: NzUploadChangeParam): void {

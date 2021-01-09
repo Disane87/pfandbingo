@@ -30,6 +30,18 @@
                     </nz-form-control>
                 </div>
 
+                <div class="mb-4">
+                    <nz-form-label nzFor="passwordRepeat" class="block font-bold text-grey-darker">
+                        {{'LOGIN.PASSWORD' | transloco}}</nz-form-label>
+
+                    <nz-form-control nzErrorTip="Please input your password!">
+                        <nz-input-group nzPrefixIcon="lock">
+                            <input name="passwordRepeat" type="password" nz-input formControlName="passwordRepeat"
+                                placeholder="Password repeat" />
+                        </nz-input-group>
+                    </nz-form-control>
+                </div>
+
                 <div class="flex items-center justify-between mt-2">
                     <button class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-200" nz-button
                         class="login-form-button login-form-margin" [disabled]="!validateForm.valid"
