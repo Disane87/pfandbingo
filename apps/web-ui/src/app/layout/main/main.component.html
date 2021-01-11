@@ -4,7 +4,7 @@
             <div class="relative flex items-center justify-between h-16">
                 <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
                     <!-- Mobile menu button-->
-                    <button
+                    <button (click)="isCollapsed = !isCollapsed"
                         class="inline-flex items-center justify-center p-2 text-gray-400 rounded-md hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                         aria-expanded="false">
                         <span class="sr-only">Open main menu</span>
@@ -34,34 +34,31 @@
                 </div>
                 <div class="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start">
                     <!-- Logo -->
-                    <div class="flex items-center flex-shrink-0">
-                        <img class="block w-auto h-8 lg:hidden"
+                    <div class="flex items-center flex-shrink-0 p-2 font-bold bg-white rounded">
+                        <!-- <img class="block w-auto h-8 lg:hidden"
                             src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="Workflow">
                         <img class="hidden w-auto h-8 lg:block"
                             src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg"
-                            alt="Workflow">
+                            alt="Workflow"> -->
+                        Pfandbingo
                     </div>
                     <!-- Links -->
                     <div class="hidden sm:block sm:ml-6">
                         <div class="flex space-x-4">
-                            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                            <!-- <a class="px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-md" routerLink="dashboard">Dashboard</a> -->
-                            <a class="px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
-                                routerLink="pfingo" routerLinkActive="text-white bg-gray-900 rounded-md">Pfingos</a>
-                            <a class="px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
-                                routerLink="todos" routerLinkActive="text-white bg-gray-900 rounded-md">Todos</a>
+                            <ng-content *ngTemplateOutlet="navigationLinks;  context: { block: false }"></ng-content>
                         </div>
                     </div>
                 </div>
                 <!-- Buttons -->
                 <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 
-                    <div class="inline-flex rounded-md shadow">
+                    <div class="hidden rounded-md shadow md:inline-flex">
                         <a href="#"
                             class="inline-flex items-center justify-center px-3 py-1 text-base font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-700">
                             + Upload
                         </a>
                     </div>
+
                     <!-- Profile dropdown -->
                     <div class="relative mx-3">
                         <div>
@@ -69,18 +66,11 @@
                                 class="flex text-sm bg-gray-800 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                                 id="user-menu" aria-haspopup="true">
                                 <span class="sr-only">Open user menu</span>
-                                <!-- <nz-avatar nzIcon="user" [nzSrc]="(profile$ | async).photoURL" nz-dropdown [nzDropdownMenu]="menu">
-                           </nz-avatar>
-                           
-                           <nz-dropdown-menu #menu="nzDropdownMenu">
-                               <ul nz-menu>
-                                   <li nz-menu-item (click)="openUpload('avatar')">Upload avatar
-                                   </li>
-                           
-                               </ul>
-                           </nz-dropdown-menu> -->
-                                <img class="w-8 h-8 rounded-full shadow-inner" [src]="(profile$ | async)?.photoURL"
-                                    alt="" nz-dropdown [nzDropdownMenu]="menu">
+
+
+                                <nz-avatar nzIcon="user" [nzSrc]="(profile$ | async)?.photoURL" nz-dropdown
+                                    [nzDropdownMenu]="menu"></nz-avatar>
+
                             </button>
                         </div>
                         <!--
@@ -100,11 +90,13 @@
                         Profile</a> -->
                             <ul nz-menu>
                                 <li class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem"
-                                    (click)="openUpload('avatar')">Image
-                                    upload
+                                    (click)="action.clickHandler()" *ngFor="let action of userActions">
+                                    <i nz-icon [nzType]="action.icon" nzTheme="outline"></i> {{action.actionName}}
+
+
                                 </li>
-                                <li class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem"
-                                    (click)="logout()">Logout</li>
+                                <!-- <li class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem"
+                                    (click)="logout()"><i nz-icon nzType="logout" nzTheme="outline"></i> Logout</li> -->
                             </ul>
                         </nz-dropdown-menu>
                     </div>
@@ -116,17 +108,18 @@
          
          Menu open: "block", Menu closed: "hidden"
          -->
-        <div class="hidden sm:hidden">
+        <div class="sm:hidden" [class.block]="isCollapsed" [class.hidden]="!isCollapsed">
             <div class="px-2 pt-2 pb-3 space-y-1">
+                <ng-content *ngTemplateOutlet="navigationLinks;  context: { block: true }"></ng-content>
                 <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                <a href="#"
+                <!-- <a href="#"
                     class="block px-3 py-2 text-base font-medium text-white bg-gray-900 rounded-md">Dashboard</a>
                 <a href="#"
                     class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white">Team</a>
                 <a href="#"
                     class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white">Projects</a>
                 <a href="#"
-                    class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white">Calendar</a>
+                    class="block px-3 py-2 text-base font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white">Calendar</a> -->
             </div>
         </div>
     </nav>
@@ -134,3 +127,10 @@
         <router-outlet></router-outlet>
     </div>
 </div>
+
+
+<ng-template #navigationLinks let-block="block">
+    <a [class.block]="block" [class.text-center]="block" [class.text-base]="block" [class.text-sm]="!block"
+        class="px-3 py-2 font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white" routerLink="pfingo"
+        routerLinkActive="text-white bg-gray-900 rounded-md">Pfingos</a>
+</ng-template>

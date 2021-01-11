@@ -29,22 +29,55 @@ export class MainComponent {
   profile$ = this.authQuery.profile$;
 
 
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  userActions: Array<{ actionName: string, clickHandler: Function; icon: string }> = [
+    { actionName: 'Upload', clickHandler: this.openUpload.bind(this), icon: 'cloud-upload' },
+    { actionName: 'Logout', clickHandler: this.logout.bind(this), icon: 'logout' },
+    { actionName: 'Delete', clickHandler: this.deleteUser.bind(this), icon: 'delete' },
+  ];
+
+
   logout() {
     this.auth.signOut().then(() => {
       this.router.navigate(['auth/login']);
-      this.persistStorage.destroy();
+      this.persistStorage.clearStore();
     });
 
   }
 
-  openUpload(uploadType: string) {
+  deleteUser() {
+    this.modal.confirm({
+      nzTitle: 'Are you sure delete this task?',
+      nzContent: '<b style="color: red;">Some descriptions</b>',
+      nzOkText: 'Yes',
+      nzOkType: 'primary',
+      nzOkDanger: true,
+      nzOnOk: () => {
+        this.auth.delete();
+        this.router.navigate(['auth/login']);
+      },
+      nzCancelText: 'No',
+      nzOnCancel: () => console.log('Cancel')
+    });
+  }
+
+
+  sendVerifyMail() {
+    this.auth.user.then(user => {
+      return user.sendEmailVerification();
+    }).then(() => {
+      //
+    })
+  }
+
+  openUpload() {
     const uploadModal = this.modal.create({
       nzTitle: 'Upload Avatar',
       nzContent: ImageUploadComponent,
       nzViewContainerRef: this.viewContainerRef,
       nzComponentParams: {
         path: `user/${this.authQuery.getValue().uid}`,
-        fileName: uploadType,
+        fileName: 'avatar',
         fileTypes: 'image/png,image/jpeg,image/gif,image/bmp'
       }
     });

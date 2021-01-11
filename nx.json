@@ -29,6 +29,9 @@
     "web-ui-e2e": {
       "tags": [],
       "implicitDependencies": ["web-ui"]
+    },
+    "endurance-ui": {
+      "tags": []
     }
   }
 }

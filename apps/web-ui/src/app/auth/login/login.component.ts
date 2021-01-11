@@ -14,6 +14,7 @@ import { AuthService } from '../state/auth.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit {
+  // eslint-disable-next-line max-len
   constructor(private fb: FormBuilder, public authService: AuthService, private authQuery: AuthQuery, private msg: NzMessageService, private router: Router) { }
   validateForm!: FormGroup;
   loginError$ = new Subject<string>();
@@ -26,11 +27,11 @@ export class LoginComponent implements OnInit {
 
   signIn(): void {
 
-    const userName = this.validateForm.get('userName').value;
+    const email = this.validateForm.get('email').value;
     const password = this.validateForm.get('password').value;
 
     this.authService
-      .signin(userName, password)
+      .signin(email, password)
       .then(() => this.router.navigate(['pfingo']))
       // .then((user: firebase.auth.UserCredential) => {
       // })
@@ -42,7 +43,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      userName: [null, [Validators.required]],
+      email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required]],
       remember: [true]
     });

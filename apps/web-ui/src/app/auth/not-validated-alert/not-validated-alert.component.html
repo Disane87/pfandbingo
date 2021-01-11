@@ -1,0 +1,6 @@
+<nz-alert nzType="error" nzMessage="Error" [nzDescription]="notValidated" nzShowIcon> </nz-alert>
+
+<ng-template #notValidated>
+    Du musst verifiziert sein um Bilder hochladen zu können. Bitte prüfe dein E-Mailpostfach.
+    <a (click)="resendVerifiyEmail()">Klicke hier</a> um dir einen neuen Code zu zu senden.
+</ng-template>

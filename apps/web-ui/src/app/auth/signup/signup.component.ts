@@ -32,9 +32,10 @@ export class SignupComponent implements OnInit {
 
     this.authService
       .signup(userName, password)
-      .then(() => this.router.navigate(['pfingo']))
-      // .then((user: firebase.auth.UserCredential) => {
-      // })
+      .then((data) => {
+        // this.router.navigate(['pfingo']);
+        data.user.sendEmailVerification();
+      })
       .catch((err: firebase.FirebaseError) => {
         this.msg.error(err.message);
       });
@@ -59,3 +60,4 @@ export class SignupComponent implements OnInit {
     return null;
   }
 }
+

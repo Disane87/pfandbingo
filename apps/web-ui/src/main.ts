@@ -9,7 +9,7 @@ if (environment.production) {
   enableProdMode();
 }
 
-const storage = persistState();
+const storage = persistState({});
 
 const providers = [{ provide: 'persistStorage', useValue: storage }];
 

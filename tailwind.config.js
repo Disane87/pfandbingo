@@ -12,7 +12,9 @@ module.exports = (isProd) => ({
       extend: {},
     },
     variants: {
-      extend: {},
+      extend: {
+        opacity: ['disabled'],
+      }
     },
     plugins: [],
 });

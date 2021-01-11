@@ -5,11 +5,12 @@ import { NgZorroModule } from '../ng-zorro-module';
 import { PfingoDetailsComponent } from './pfingo-details/pfingo-details.component';
 import { PfingoRoutingModule } from './pfingo-routing.module';
 import { PfingoComponent } from './pfingo.component';
+import { PfingoItemComponent } from './pfingo-item/pfingo-item.component';
 
 
 
 @NgModule({
-  declarations: [PfingoComponent, PfingoDetailsComponent],
+  declarations: [PfingoComponent, PfingoDetailsComponent, PfingoItemComponent],
   imports: [
     CommonModule,
     PfingoRoutingModule,

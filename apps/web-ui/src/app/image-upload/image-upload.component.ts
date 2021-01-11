@@ -1,9 +1,10 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzUploadChangeParam, NzUploadFile, NzUploadXHRArgs } from 'ng-zorro-antd/upload';
 import { Subject } from 'rxjs';
 import { last, switchMap, tap } from 'rxjs/operators';
+import { AuthQuery } from '../auth/state/auth.query';
 
 @Component({
   selector: 'pfandbingo-image-upload',
@@ -11,7 +12,7 @@ import { last, switchMap, tap } from 'rxjs/operators';
   styleUrls: ['./image-upload.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ImageUploadComponent implements OnInit {
+export class ImageUploadComponent {
   uploading = false;
   fileList: NzUploadFile[] = [];
 
@@ -26,19 +27,11 @@ export class ImageUploadComponent implements OnInit {
 
   uploadComplete$ = new Subject<string>();
 
-  constructor(private msg: NzMessageService, private fireStorage: AngularFireStorage) { }
-
-  ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-  }
-
-  beforeUpload = (file: NzUploadFile): boolean => {
-    this.fileList = this.fileList.concat(file);
-    return false;
-  };
+  constructor(private msg: NzMessageService, private fireStorage: AngularFireStorage, private authQuery: AuthQuery) { }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+  disabled$ = this.authQuery.select('emailVerified');
   customUploadReq = (item: NzUploadXHRArgs) => {
     const fileName = item.file.name;
     const fileExtension = fileName.substr(fileName.lastIndexOf('.') + 1);

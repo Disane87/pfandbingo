@@ -8,6 +8,8 @@ export interface Profile {
     uid: string;
 
     email: string;
+
+    language: string;
 }
 
 export type AuthState = FireAuthState<Profile>

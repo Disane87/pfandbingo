@@ -14,12 +14,8 @@ const routes: Routes = [
     path: '', ...canActivate(redirectUnauthorizedToLogin), component: MainComponent, children: [
       { path: 'todos', component: TodosComponent, ...canActivate(redirectUnauthorizedToLogin) },
       { path: '**', redirectTo: 'error/404' },
-      {
-        path: 'pfingo',
-        ...canActivate(redirectUnauthorizedToLogin),
-        // canActivate: [AngularFireAuthGuard],
-        loadChildren: () => import('./pfingo/pfingo.module').then(m => m.PfingoModule)
-      },
+      // eslint-disable-next-line max-len
+      { path: 'pfingo', ...canActivate(redirectUnauthorizedToLogin), loadChildren: () => import('./pfingo/pfingo.module').then(m => m.PfingoModule) },
     ],
 
   },

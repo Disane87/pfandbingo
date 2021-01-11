@@ -6,7 +6,8 @@
 	],
 	"settings": {
 		"conventionalCommits.scopes": [
-			"firebase"
+			"firebase",
+			"general"
 		]
 	}
 }

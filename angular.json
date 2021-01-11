@@ -16,13 +16,8 @@
             "polyfills": "apps/web-ui/src/polyfills.ts",
             "tsConfig": "apps/web-ui/tsconfig.app.json",
             "aot": true,
-            "assets": [
-              "apps/web-ui/src/favicon.ico",
-              "apps/web-ui/src/assets"
-            ],
-            "styles": [
-              "apps/web-ui/src/styles.scss"
-            ],
+            "assets": ["apps/web-ui/src/favicon.ico", "apps/web-ui/src/assets"],
+            "styles": ["apps/web-ui/src/styles.scss"],
             "scripts": [],
             "customWebpackConfig": {
               "path": "webpack.config.js"
@@ -86,9 +81,7 @@
         },
         "test": {
           "builder": "@nrwl/jest:jest",
-          "outputs": [
-            "coverage/apps/web-ui"
-          ],
+          "outputs": ["coverage/apps/web-ui"],
           "options": {
             "jestConfig": "apps/web-ui/jest.config.js",
             "passWithNoTests": true
@@ -121,9 +114,32 @@
         "lint": {
           "builder": "@nrwl/linter:eslint",
           "options": {
+            "lintFilePatterns": ["apps/web-ui-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    },
+    "endurance-ui": {
+      "projectType": "library",
+      "root": "libs/endurance-ui",
+      "sourceRoot": "libs/endurance-ui/src",
+      "prefix": "pfandbingo",
+      "architect": {
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
             "lintFilePatterns": [
-              "apps/web-ui-e2e/**/*.{js,ts}"
+              "libs/endurance-ui/src/**/*.ts",
+              "libs/endurance-ui/src/**/*.html"
             ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/endurance-ui"],
+          "options": {
+            "jestConfig": "libs/endurance-ui/jest.config.js",
+            "passWithNoTests": true
           }
         }
       }

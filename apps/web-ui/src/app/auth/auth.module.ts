@@ -2,9 +2,11 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
+import { EnduranceUiModule } from '@pfandbingo/endurance-ui';
 import { NgZorroModule } from '../ng-zorro-module';
 import { TranslocoRootModule } from '../transloco/transloco-root.module';
 import { LoginComponent } from './login/login.component';
+import { NotValidatedAlertComponent } from './not-validated-alert/not-validated-alert.component';
 import { SignupComponent } from './signup/signup.component';
 
 const routes: Routes = [
@@ -18,15 +20,16 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [LoginComponent, SignupComponent],
+  declarations: [LoginComponent, SignupComponent, NotValidatedAlertComponent],
   imports: [
     CommonModule,
+    EnduranceUiModule,
     RouterModule.forChild(routes),
     FormsModule,
     ReactiveFormsModule,
     NgZorroModule,
     TranslocoRootModule
   ],
-  exports: [RouterModule]
+  exports: [RouterModule, NotValidatedAlertComponent]
 })
 export class AuthModule { }

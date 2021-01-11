@@ -17,6 +17,7 @@ import { NzCascaderModule } from 'ng-zorro-antd/cascader';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 import { NzCommentModule } from 'ng-zorro-antd/comment';
+import { NzConfig, NZ_CONFIG } from 'ng-zorro-antd/core/config';
 import { NzNoAnimationModule } from 'ng-zorro-antd/core/no-animation';
 import { NzTransButtonModule } from 'ng-zorro-antd/core/trans-button';
 import { NzWaveModule } from 'ng-zorro-antd/core/wave';
@@ -69,6 +70,12 @@ import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
 import { NzTreeViewModule } from 'ng-zorro-antd/tree-view';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
+
+
+const ngZorroConfig: NzConfig = {
+    message: { nzTop: 120 },
+    notification: { nzTop: 240 },
+};
 
 
 const antDesignIcons = AllIcons as {
@@ -151,7 +158,8 @@ const icons: IconDefinition[] = Object.keys(antDesignIcons).map(key => antDesign
         NzResizableModule,
         NzPipesModule
     ],
-    providers: [{ provide: NZ_I18N, useValue: de_DE }, { provide: NZ_ICONS, useValue: icons }],
+    // eslint-disable-next-line max-len
+    providers: [{ provide: NZ_I18N, useValue: de_DE }, { provide: NZ_ICONS, useValue: icons }, { provide: NZ_CONFIG, useValue: ngZorroConfig }],
 })
 export class NgZorroModule { }
 
