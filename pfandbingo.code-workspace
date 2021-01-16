@@ -8,6 +8,9 @@
 		"conventionalCommits.scopes": [
 			"firebase",
 			"general"
+		],
+		"auto-close-tag.activationOnLanguage": [
+			"html"
 		]
 	}
 }

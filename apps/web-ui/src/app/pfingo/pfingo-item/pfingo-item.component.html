@@ -1,6 +1,6 @@
 <!-- Article -->
 <article
-    class="w-56 m-3 overflow-hidden transition ease-in-out transform scale-100 border rounded-lg shadow-lg hover:border-blue-500 hover:scale-105 ">
+    class="w-56 m-3 overflow-hidden transition ease-in-out transform scale-100 border rounded-lg shadow-lg pfingo hover:border-blue-500 hover:scale-105 ">
 
     <div>
         <div [hidden]="!imageLoading">Loading...</div>
@@ -21,12 +21,12 @@
                 {{ pfingo.user.displayName }}
             </p>
         </a>
-        <a class="no-underline text-grey-darker hover:text-red-dark" href="#">
+        <!-- <a class="no-underline text-grey-darker hover:text-red-dark" href="#">
             <span class="hidden">Like</span>
             <i class="fa fa-heart"></i>
-        </a>
+        </a> -->
 
-        <div class="flex items-center text-black no-underline hover:underline" *ngIf="pfingo.isOwn">
+        <div class="flex items-center text-black no-underline hover:underline show-on-hover" *ngIf="pfingo.isOwn">
             <i class="cursor-pointer" nz-icon [nzTheme]="'twotone'" [nzTwotoneColor]="'#eb2f96'" [nzType]="'delete'"
                 (click)="delete(pfingo.id)"></i>
         </div>

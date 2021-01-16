@@ -15,7 +15,9 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@pfandbingo/endurance-ui": ["libs/endurance-ui/src/index.ts"]
+      "@pfandbingo/endurance-ui": ["libs/endurance-ui/src/index.ts"],
+      "@pfandbingo/layout": ["libs/layout/src/index.ts"],
+      "@pfandbingo/endurance-layout": ["libs/endurance-layout/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp", ".history"]

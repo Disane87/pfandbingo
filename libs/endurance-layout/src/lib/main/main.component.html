@@ -1,4 +1,4 @@
-<div class="flex-row d-flex">
+<div class="flex flex-col h-full">
     <nav class="bg-gray-800 shadow">
         <div class="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="relative flex items-center justify-between h-16">
@@ -68,8 +68,8 @@
                                 <span class="sr-only">Open user menu</span>
 
 
-                                <nz-avatar nzIcon="user" [nzSrc]="(profile$ | async)?.photoURL" nz-dropdown
-                                    [nzDropdownMenu]="menu"></nz-avatar>
+                                <nz-avatar nzIcon="user" [nzSrc]="photoUrl" nz-dropdown [nzDropdownMenu]="menu">
+                                </nz-avatar>
 
                             </button>
                         </div>
@@ -90,7 +90,7 @@
                         Profile</a> -->
                             <ul nz-menu>
                                 <li class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem"
-                                    (click)="action.clickHandler()" *ngFor="let action of userActions">
+                                    (click)="action.clickHandler()" *ngFor="let action of userMenuActions">
                                     <i nz-icon [nzType]="action.icon" nzTheme="outline"></i> {{action.actionName}}
 
 
@@ -123,7 +123,8 @@
             </div>
         </div>
     </nav>
-    <div class="h-full px-10 pt-8 content">
+    <div class="h-full p-4 content">
+        <ng-content></ng-content>
         <router-outlet></router-outlet>
     </div>
 </div>
@@ -132,5 +133,9 @@
 <ng-template #navigationLinks let-block="block">
     <a [class.block]="block" [class.text-center]="block" [class.text-base]="block" [class.text-sm]="!block"
         class="px-3 py-2 font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white" routerLink="pfingo"
-        routerLinkActive="text-white bg-gray-900 rounded-md">Pfingos</a>
+        routerLinkActive="text-gray-100 bg-gray-900 rounded-md">Pfingos</a>
+
+    <a [class.block]="block" [class.text-center]="block" [class.text-base]="block" [class.text-sm]="!block"
+        class="px-3 py-2 font-medium text-gray-300 rounded-md hover:bg-gray-700 hover:text-white"
+        routerLink="leaderboard" routerLinkActive="text-gray-100 bg-gray-900 rounded-md">Leaderboard</a>
 </ng-template>

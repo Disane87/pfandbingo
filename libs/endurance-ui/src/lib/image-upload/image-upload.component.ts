@@ -4,7 +4,6 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzUploadChangeParam, NzUploadFile, NzUploadXHRArgs } from 'ng-zorro-antd/upload';
 import { Subject } from 'rxjs';
 import { last, switchMap, tap } from 'rxjs/operators';
-import { AuthQuery } from '../auth/state/auth.query';
 
 @Component({
   selector: 'pfandbingo-image-upload',
@@ -23,15 +22,23 @@ export class ImageUploadComponent {
 
   @Input() title = 'Werfe hier einfach ein Bild hin oder klicke zum Hochladen';
 
+  @Input() photoUrl: string;
+  @Input() disabled = false;
+
   @Output() fileUploaded = new EventEmitter<string>();
+
+  @Output() progressChanged = new EventEmitter<number>();
+
+
+
 
   uploadComplete$ = new Subject<string>();
 
-  constructor(private msg: NzMessageService, private fireStorage: AngularFireStorage, private authQuery: AuthQuery) { }
+  constructor(private msg: NzMessageService, private fireStorage: AngularFireStorage) { }
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
-  disabled$ = this.authQuery.select('emailVerified');
+  // disabled$ = this.authQuery.select('emailVerified');
   customUploadReq = (item: NzUploadXHRArgs) => {
     const fileName = item.file.name;
     const fileExtension = fileName.substr(fileName.lastIndexOf('.') + 1);
@@ -43,6 +50,7 @@ export class ImageUploadComponent {
     upload.percentageChanges().subscribe(percent => {
       // this.msg.success('Upload pending ' + Math.trunc(percent) + '%');
       item.onProgress({ percent: Math.trunc(percent) }, item.file)
+      this.progressChanged.emit(Math.trunc(percent))
     })
 
     upload.snapshotChanges().pipe(

@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ImageUploadModule } from '../image-upload/image-upload.module';
-import { NgZorroModule } from '../ng-zorro-module';
+import { EnduranceUiModule } from '@pfandbingo/endurance-ui';
 import { PfingoDetailsComponent } from './pfingo-details/pfingo-details.component';
+import { PfingoItemComponent } from './pfingo-item/pfingo-item.component';
 import { PfingoRoutingModule } from './pfingo-routing.module';
 import { PfingoComponent } from './pfingo.component';
-import { PfingoItemComponent } from './pfingo-item/pfingo-item.component';
 
 
 
@@ -14,8 +13,7 @@ import { PfingoItemComponent } from './pfingo-item/pfingo-item.component';
   imports: [
     CommonModule,
     PfingoRoutingModule,
-    ImageUploadModule,
-    NgZorroModule
+    EnduranceUiModule
   ]
 })
 export class PfingoModule { }

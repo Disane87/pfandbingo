@@ -1,0 +1,10 @@
+.pfingo {
+  .show-on-hover {
+    visibility: hidden;
+    @apply transition-all ease-in-out duration-75;
+  }
+
+  &:hover .show-on-hover {
+    visibility: visible;
+  }
+}

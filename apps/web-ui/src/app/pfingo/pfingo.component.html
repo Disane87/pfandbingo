@@ -1,5 +1,5 @@
-<div class="container flex w-full h-full px-4 mx-auto my-12">
-    <div class="flex flex-wrap w-full h-full -mx-1 lg:-mx-4" @list>
+<div class="flex w-full h-full">
+    <div class="flex flex-wrap w-full h-full pt-4 -mx-1 lg:-mx-4" @list>
 
 
         <!-- Column -->
@@ -10,8 +10,6 @@
             </pfandbingo-pfingo-item>
         </ng-container>
 
-
-
         <ng-template #noData>
             <nz-empty class="w-full" nzNotFoundContent="Keine Pfingos vorhanden"></nz-empty>
 
@@ -20,10 +18,13 @@
         <!-- </div> -->
         <!-- END Column -->
     </div>
-    <div class="h-full p-3 border-l">
-        <pfandbingo-image-upload class="w-64 h-72" [path]="'pfingos/'"
-            [fileTypes]="'image/png,image/jpeg,image/gif,image/bmp'" (fileUploaded)="fileUploaded($event)">
-        </pfandbingo-image-upload>
+    <div class="w-1/3 h-full p-3 border-l">
+        <div class="upload h-1/3">
+            <pfandbingo-image-upload [title]="'Pack Zeug rein'" class="h-full" [path]="'pfingos/'"
+                [fileTypes]="'image/png,image/jpeg,image/gif,image/bmp'" (fileUploaded)="fileUploaded($event)">
+            </pfandbingo-image-upload>
+        </div>
+
     </div>
 
 </div>

@@ -32,6 +32,9 @@
     },
     "endurance-ui": {
       "tags": []
+    },
+    "endurance-layout": {
+      "tags": []
     }
   }
 }

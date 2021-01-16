@@ -8,6 +8,7 @@ import { TranslocoRootModule } from '../transloco/transloco-root.module';
 import { LoginComponent } from './login/login.component';
 import { NotValidatedAlertComponent } from './not-validated-alert/not-validated-alert.component';
 import { SignupComponent } from './signup/signup.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   {
@@ -20,7 +21,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [LoginComponent, SignupComponent, NotValidatedAlertComponent],
+  declarations: [LoginComponent, SignupComponent, NotValidatedAlertComponent, ProfileComponent],
   imports: [
     CommonModule,
     EnduranceUiModule,

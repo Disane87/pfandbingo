@@ -1,0 +1,23 @@
+<nz-upload nzType="drag" [nzDisabled]="disabled" [nzAccept]="fileTypes" [nzMultiple]="true" [nzFileType]="fileTypes"
+    [nzFileList]="fileList" [nzCustomRequest]="customUploadReq" (nzChange)="handleChange($event)">
+
+    <p class="ant-upload-drag-icon">
+        <i nz-icon nzType="picture"></i>
+    </p>
+    <p class="p-3 ant-upload-text">
+
+        <ng-container *ngIf="!disabled">
+            {{title}}
+        </ng-container>
+
+    </p>
+    <!-- <p class="ant-upload-hint">
+        Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files
+    </p> -->
+
+
+</nz-upload>
+
+<ng-container *ngIf="disabled">
+    <!-- <pfandbingo-not-validated-alert></pfandbingo-not-validated-alert> -->
+</ng-container>

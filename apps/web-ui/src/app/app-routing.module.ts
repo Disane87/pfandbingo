@@ -1,21 +1,21 @@
 import { NgModule } from '@angular/core';
 import { canActivate, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 import { RouterModule, Routes } from '@angular/router';
-import { MainComponent } from './layout/main/main.component';
-import { TodosComponent } from './todos/todos/todos.component';
-
-
+import { isDev } from '@datorama/akita';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['auth/login']);
 const redirectLoggedInToUpload = () => redirectLoggedInTo(['pfingo']);
 
 const routes: Routes = [
   {
-    path: '', ...canActivate(redirectUnauthorizedToLogin), component: MainComponent, children: [
-      { path: 'todos', component: TodosComponent, ...canActivate(redirectUnauthorizedToLogin) },
-      { path: '**', redirectTo: 'error/404' },
-      // eslint-disable-next-line max-len
-      { path: 'pfingo', ...canActivate(redirectUnauthorizedToLogin), loadChildren: () => import('./pfingo/pfingo.module').then(m => m.PfingoModule) },
+    path: '', ...canActivate(redirectUnauthorizedToLogin), children: [
+      { path: '', redirectTo: 'pfingo', ...canActivate(redirectUnauthorizedToLogin), pathMatch: 'full' },
+      {
+        path: 'pfingo',
+        ...canActivate(redirectUnauthorizedToLogin),
+        loadChildren: () => import('./pfingo/pfingo.module').then(m => m.PfingoModule)
+      },
+      { path: '**', redirectTo: 'error/404' }
     ],
 
   },
@@ -29,7 +29,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { enableTracing: false })],
+  imports: [RouterModule.forRoot(routes, { enableTracing: isDev() })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
