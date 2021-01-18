@@ -1,66 +1,67 @@
-<div class="h-full font-sans bg-gray-100 w-50">
-    <form nz-form nzLayout="vertical" [formGroup]="validateForm" (ngSubmit)="signIn()"
-        class="container flex items-center justify-center h-full mx-auto">
-        <div class="w-1/4">
-            <h1 class="mb-6 font-hairline text-center">{{ 'LOGIN.WELCOME' | transloco }}</h1>
-            <div class="p-8 mb-6 bg-white border-t-8 border-blue-500 rounded-lg shadow-lg">
-                <div class="mb-4">
-                    <nz-form-item>
-                        <nz-form-label nzFor="userName" class="block font-bold text-grey-darker">
-                            {{'LOGIN.EMAIL' | transloco}}</nz-form-label>
-
-                        <nz-form-control nzErrorTip="Please input your username!">
-                            <nz-input-group nzPrefixIcon="user">
-                                <input name="userName" type="text" nz-input formControlName="userName"
-                                    placeholder="Username" />
-                            </nz-input-group>
-                        </nz-form-control>
-                    </nz-form-item>
-                </div>
-
-                <div class="mb-4">
-                    <nz-form-label nzFor="userName" class="block font-bold text-grey-darker">
-                        {{'LOGIN.PASSWORD' | transloco}}</nz-form-label>
-
-                    <nz-form-control nzErrorTip="Please input your password!">
-                        <nz-input-group nzPrefixIcon="lock">
-                            <input name="password" type="password" nz-input formControlName="password"
-                                placeholder="Password" />
-                        </nz-input-group>
-                    </nz-form-control>
-                </div>
-
-                <div class="mb-4">
-                    <nz-form-label nzFor="passwordRepeat" class="block font-bold text-grey-darker">
-                        {{'LOGIN.PASSWORD' | transloco}}</nz-form-label>
-
-                    <nz-form-control nzErrorTip="Please input your password!">
-                        <nz-input-group nzPrefixIcon="lock">
-                            <input name="passwordRepeat" type="password" nz-input formControlName="passwordRepeat"
-                                placeholder="Password repeat" />
-                        </nz-input-group>
-                    </nz-form-control>
-                </div>
-
-                <div class="flex items-center justify-between mt-2">
-                    <button class="px-4 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-200" nz-button
-                        class="login-form-button login-form-margin" [disabled]="!validateForm.valid"
-                        [nzLoading]="authPending$ | async" [nzType]="'primary'">
-                        Login
-                    </button>
-
-                    <a class="inline-block float-right text-sm font-bold no-underline align-baseline text-blue hover:text-blue-dark"
-                        href="#">
-                        Forgot Password?
-                    </a>
-                </div>
+<div class="flex items-center min-h-screen p-4 bg-gray-100 lg:justify-center">
+    <div
+        class="flex flex-col overflow-hidden bg-white rounded-md shadow-lg max md:flex-row md:flex-1 lg:max-w-screen-md">
+        <div
+            class="p-4 py-6 text-white bg-blue-500 md:w-80 md:flex-shrink-0 md:flex md:flex-col md:items-center md:justify-evenly">
+            <div class="my-3 text-4xl font-bold tracking-wider text-center">
+                <a href="#">Pfandbingo</a>
             </div>
-            <div class="text-center">
-                <p class="text-sm text-grey-dark">
-                    Don't have an account?
-                    <a routerLink="/auth/signup" class="font-bold no-underline text-blue">Create an Account</a>.
-                </p>
-            </div>
+            <p class="hidden mt-6 font-normal text-center text-gray-300 md:block md:mt-0">
+                Mit Pfangbingo kannst du dem lästigen Handling der Pfandflaschen einen Hauch von Spielrei geben. Logge
+                dich ein, bewerte oder teile deine Bilder und habe einfach Spaß!
+            </p>
+            <p class="flex flex-col items-center justify-center mt-10 text-center">
+                <span>Du hast bereits einen Account?</span>
+                <a routerLink="../login" class="underline">Leg los!</a>
+            </p>
+            <p class="mt-6 text-sm text-center text-gray-300">
+                Lese hier unsere <a href="#" class="underline">AGB</a> und <a href="#"
+                    class="underline">Datenschutzbestimmungen</a>
+            </p>
         </div>
-    </form>
+        <div class="p-5 bg-white md:flex-1">
+
+            <h3 class="my-4 text-2xl font-semibold text-gray-700">Registrieren</h3>
+            <form [formGroup]="validateForm" (ngSubmit)="signIn()" class="flex flex-col space-y-5" #form="ngForm">
+                <!-- <form action="#" > -->
+                <div class="flex flex-col space-y-1">
+                    <label for="email" class="text-sm font-semibold text-gray-500">E-Mailadresse</label>
+                    <pfandbingo-input preIcon="user" class="w-full" name="email" type="text" formControlName="email">
+                    </pfandbingo-input>
+                    <!-- <input name="email" type="email" id="email" autofocus formControlName="email" autocomplete="on"
+                        class="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200" /> -->
+                </div>
+                <div class="flex flex-col space-y-1">
+                    <div class="flex items-center justify-between">
+                        <label for="password" class="text-sm font-semibold text-gray-500">Passwort</label>
+
+                    </div>
+                    <pfandbingo-input preIcon="lock" class="w-full" name="password" type="password"
+                        formControlName="password">
+                    </pfandbingo-input>
+                    <!-- <input type="password" id="password" formControlName="password" autocomplete="on"
+                        class="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200" /> -->
+                </div>
+                <div class="flex flex-col space-y-1">
+                    <div class="flex items-center justify-between">
+                        <label for="password" class="text-sm font-semibold text-gray-500">Passwort wiederholen</label>
+
+                    </div>
+                    <pfandbingo-input preIcon="lock" class="w-full" name="password-repeat" type="password"
+                        formControlName="passwordRepeat">
+                    </pfandbingo-input>
+                    <!-- <input type="password" id="password" formControlName="password" autocomplete="on"
+                                        class="px-4 py-2 transition duration-300 border border-gray-300 rounded focus:border-transparent focus:outline-none focus:ring-4 focus:ring-blue-200" /> -->
+                </div>
+
+
+
+                <div>
+                    <pfandbingo-button [type]="'submit'" [title]="'Registrieren'" [loading]="signInPending$ | async"
+                        [disabled]="!validateForm.valid || (signInPending$ | async)"></pfandbingo-button>
+                </div>
+                <pfandbingo-auth-provider></pfandbingo-auth-provider>
+            </form>
+        </div>
+    </div>
 </div>

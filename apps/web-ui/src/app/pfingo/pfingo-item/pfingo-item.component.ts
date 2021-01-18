@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { AngularFireStorage } from '@angular/fire/storage';
 import { Pfingo } from '../state/pfingo.model';
 import { PfingosService } from '../state/pfingos.service';
 
@@ -12,12 +14,13 @@ export class PfingoItemComponent {
 
   @Input() pfingo: Pfingo;
 
-  public imageLoading = true;
 
-  constructor(private pfingoService: PfingosService) { }
+  constructor(private pfingoService: PfingosService, public angularFireAuth: AngularFireAuth, private fireStorage: AngularFireStorage) { }
 
-  delete(id: string) {
-    this.pfingoService.remove(id)
+  delete(pfingo: Pfingo) {
+    this.pfingoService.remove(pfingo.id.toString());
+    this.fireStorage.refFromURL(pfingo.imagePath).delete().subscribe();
+
   }
 
 }

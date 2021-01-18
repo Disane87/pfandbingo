@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { Guid } from 'guid-typescript';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzUploadChangeParam, NzUploadFile, NzUploadXHRArgs } from 'ng-zorro-antd/upload';
 import { Subject } from 'rxjs';
@@ -25,9 +26,11 @@ export class ImageUploadComponent {
   @Input() photoUrl: string;
   @Input() disabled = false;
 
+
   @Output() fileUploaded = new EventEmitter<string>();
 
   @Output() progressChanged = new EventEmitter<number>();
+
 
 
 
@@ -40,10 +43,9 @@ export class ImageUploadComponent {
 
   // disabled$ = this.authQuery.select('emailVerified');
   customUploadReq = (item: NzUploadXHRArgs) => {
-    const fileName = item.file.name;
-    const fileExtension = fileName.substr(fileName.lastIndexOf('.') + 1);
-    const fileNameWithoutExtension = fileName.substr(0, fileName.lastIndexOf('.'));
-    const uploadPath = `${this.path}/${this.fileName || fileNameWithoutExtension}.${fileExtension}`;
+    const fileName = Guid.create().toString(); //item.file.name;
+    const fileExtension = item.file.name.substr(item.file.name.lastIndexOf('.') + 1);
+    const uploadPath = `${this.path}/${fileName}.${fileExtension}`;
 
     const upload = this.fireStorage.upload(uploadPath, item.file);
     const fileRef = this.fireStorage.ref(uploadPath);

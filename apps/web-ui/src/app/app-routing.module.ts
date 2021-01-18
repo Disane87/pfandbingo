@@ -1,18 +1,26 @@
+/* eslint-disable max-len */
 import { NgModule } from '@angular/core';
-import { canActivate, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+import { AuthPipe, canActivate, emailVerified, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
 import { RouterModule, Routes } from '@angular/router';
-import { isDev } from '@datorama/akita';
+import { pipe } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['auth/login']);
-const redirectLoggedInToUpload = () => redirectLoggedInTo(['pfingo']);
+const redirectToStart = () => redirectLoggedInTo(['pfingo']);
+// const redirectLoggedInToUpload: AuthPipe = () =>
+//   pipe(emailVerified, map(verified => verified ? ['auth/login'] : ['pfingo']));
+
+const redirectUnverified: () => AuthPipe = () => pipe(emailVerified, map(verified => verified ? true : ['auth/login']));
+const redirectVerified: () => AuthPipe = () => pipe(emailVerified, map(verified => !verified ? true : ['pfingo']));
+
 
 const routes: Routes = [
   {
-    path: '', ...canActivate(redirectUnauthorizedToLogin), children: [
-      { path: '', redirectTo: 'pfingo', ...canActivate(redirectUnauthorizedToLogin), pathMatch: 'full' },
+    path: '', ...canActivate(redirectUnverified), children: [
+      { path: '', redirectTo: 'pfingo', ...canActivate(redirectUnverified), pathMatch: 'full' },
       {
         path: 'pfingo',
-        ...canActivate(redirectUnauthorizedToLogin),
+        ...canActivate(redirectUnverified),
         loadChildren: () => import('./pfingo/pfingo.module').then(m => m.PfingoModule)
       },
       { path: '**', redirectTo: 'error/404' }
@@ -21,7 +29,7 @@ const routes: Routes = [
   },
   {
     path: 'auth',
-    ...canActivate(redirectLoggedInToUpload),
+    ...canActivate(redirectVerified),
     loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)
   },
   { path: 'error', loadChildren: () => import('./error/error.module').then(m => m.ErrorModule) },
@@ -29,7 +37,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { enableTracing: isDev() })],
+  imports: [RouterModule.forRoot(routes, { enableTracing: false })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

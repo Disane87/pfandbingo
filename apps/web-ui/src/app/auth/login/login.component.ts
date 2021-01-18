@@ -32,9 +32,14 @@ export class LoginComponent implements OnInit {
 
     this.authService
       .signin(email, password)
-      .then(() => this.router.navigate(['pfingo']))
-      // .then((user: firebase.auth.UserCredential) => {
-      // })
+      // .then(() => this.router.navigate(['pfingo']))
+      .then((userCredential: firebase.auth.UserCredential) => {
+        if (!userCredential.user.emailVerified) {
+
+          this.msg.error('User not verified. Please check your emails');
+
+        }
+      })
       .catch((err: firebase.FirebaseError) => {
         this.msg.error(err.message);
       });

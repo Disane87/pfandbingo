@@ -1,7 +1,10 @@
-<endurance-layout-main [photoUrl]="profile.photoURL" [userMenuActions]="userMenuActions"
-    *ngIf="(profile$ | async) as profile; else notLoggedIn">
-    <router-outlet></router-outlet>
-</endurance-layout-main>
+<ng-container *ngIf="(loggedInAndMailVerified$ | async) as profile; else notLoggedIn">
+    <endurance-layout-main [photoUrl]="profile.photoURL" [userMenuActions]="userMenuActions">
+    </endurance-layout-main>
+</ng-container>
+
+
+
 
 <ng-template #notLoggedIn>
     <router-outlet></router-outlet>

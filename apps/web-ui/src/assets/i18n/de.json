@@ -3,5 +3,10 @@
         "WELCOME": "Willkommen!",
         "EMAIL": "E-Mail",
         "PASSWORD": "Passwort"
+    },
+    "VALIDATION": {
+        "REQUIRED": "Dieses Feld muss gefüllt werden",
+        "EMAIL": "Dieses Feld muss mit einer fültigen E-Mailadresse gefüllt werden",
+        "MUSTMATCH": "Dieses Feld "
     }
 }

@@ -21,20 +21,20 @@ export class SignupComponent implements OnInit {
 
   profile$ = this.authQuery.profile$;
 
-  authPending$ = this.authQuery.selectLoading();
+  signInPending$ = this.authQuery.selectLoading();
 
   public isPasswordSame: boolean;
 
   signIn(): void {
 
-    const userName = this.validateForm.get('userName').value;
+    const userName = this.validateForm.get('email').value;
     const password = this.validateForm.get('password').value;
 
     this.authService
       .signup(userName, password)
       .then((data) => {
-        // this.router.navigate(['pfingo']);
         data.user.sendEmailVerification();
+        this.msg.info('Verification Mail has been send. Please check your inbox.')
       })
       .catch((err: firebase.FirebaseError) => {
         this.msg.error(err.message);
@@ -44,20 +44,32 @@ export class SignupComponent implements OnInit {
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
-      userName: [null, [Validators.required, Validators.email]],
+      email: [null, [Validators.required, Validators.email]],
       password: [null, [Validators.required]],
-      passwordRepeat: [null, [Validators.required, this.passwordsMatchValidator]],
+      passwordRepeat: [null, [Validators.required]],
       remember: [true]
+    }, {
+      validator: MustMatch('password', 'passwordRepeat')
     });
-  }
-
-
-
-  private passwordsMatchValidator(form: FormGroup) {
-    if (form.get('password') && form.get('passwordRepeat')) {
-      return form.get('password').value === form.get('passwordRepeat').value ? null : { mismatch: true };
-    }
-    return null;
   }
 }
 
+
+export function MustMatch(controlName: string, matchingControlName: string) {
+  return (formGroup: FormGroup) => {
+    const control = formGroup.controls[controlName];
+    const matchingControl = formGroup.controls[matchingControlName];
+
+    if (matchingControl.errors && !matchingControl.errors.mustMatch) {
+      // return if another validator has already found an error on the matchingControl
+      return;
+    }
+
+    // set error on matchingControl if validation fails
+    if (control.value !== matchingControl.value) {
+      matchingControl.setErrors({ mustMatch: true });
+    } else {
+      matchingControl.setErrors(null);
+    }
+  }
+}

@@ -1,10 +1,10 @@
 <!-- Article -->
 <article
-    class="w-56 m-3 overflow-hidden transition ease-in-out transform scale-100 border rounded-lg shadow-lg pfingo hover:border-blue-500 hover:scale-105 ">
+    class="flex flex-col w-56 m-3 overflow-hidden transition ease-in-out transform scale-100 border rounded-lg shadow-lg h-96 pfingo hover:border-blue-500 hover:scale-105 ">
 
-    <div>
-        <div [hidden]="!imageLoading">Loading...</div>
-        <img alt="Placeholder" class="block object-cover h-56 " (load)="imageLoading = false" [src]="pfingo.imagePath">
+    <div class="h-full">
+        <pfandbingo-image [src]="pfingo.imagePath" *ngIf="(angularFireAuth.idToken | async) as token">
+        </pfandbingo-image>
     </div>
 
     <header class="flex items-center justify-between p-2 leading-tight md:p-4">
@@ -13,7 +13,7 @@
         </p>
     </header>
 
-    <footer class="flex items-center justify-between p-2 leading-none md:p-4">
+    <footer class="flex items-center justify-between p-2 leading-none bg-gray-100 border-t md:p-4">
         <a class="flex items-center text-black no-underline hover:underline" href="#">
             <!-- <img alt="Placeholder" class="block w-8 h-8 rounded-full" [src]="pfingo.user.photoURL"> -->
             <nz-avatar nzIcon="user" [nzSrc]="pfingo.user.photoURL"></nz-avatar>
@@ -28,7 +28,7 @@
 
         <div class="flex items-center text-black no-underline hover:underline show-on-hover" *ngIf="pfingo.isOwn">
             <i class="cursor-pointer" nz-icon [nzTheme]="'twotone'" [nzTwotoneColor]="'#eb2f96'" [nzType]="'delete'"
-                (click)="delete(pfingo.id)"></i>
+                (click)="delete(pfingo)"></i>
         </div>
     </footer>
 

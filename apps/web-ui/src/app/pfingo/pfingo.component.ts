@@ -39,6 +39,8 @@ export class PfingoComponent implements OnInit {
   pfingos$ = this.pfingosQuery.selectAllPfingos();
   pfingoCount$ = this.pfingosQuery.selectCount();
 
+  profile$ = this.authQuery.profile$;
+
   ngOnInit(): void {
   }
 

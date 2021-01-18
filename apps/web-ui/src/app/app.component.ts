@@ -1,4 +1,4 @@
-import { Component, Inject, ViewContainerRef } from '@angular/core';
+import { Component, HostBinding, Inject, isDevMode, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { PersistState } from '@datorama/akita';
 import { UserMenuAction } from '@pfandbingo/endurance-layout';
@@ -8,7 +8,7 @@ import { AuthQuery } from './auth/state/auth.query';
 import { AuthService } from './auth/state/auth.service';
 
 @Component({
-  selector: 'pfandbingo-root',
+  selector: 'body',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
@@ -28,7 +28,9 @@ export class AppComponent {
     private viewContainerRef: ViewContainerRef
   ) { }
   public profile$ = this.authQuery.profile$;
-  public accountVerified = this.authQuery.getValue().emailVerified;
+  public loggedInAndMailVerified$ = this.authQuery.loggedInAndMailVerified$;
+
+  @HostBinding('class.debug-screens') debugScreens = isDevMode();
 
   logout() {
     this.auth.signOut().then(() => {
@@ -38,6 +40,8 @@ export class AppComponent {
 
   }
 
+  @HostBinding()
+
   deleteUser() {
     this.modal.confirm({
       nzTitle: 'Are you sure delete this task?',
@@ -46,8 +50,10 @@ export class AppComponent {
       nzOkType: 'primary',
       nzOkDanger: true,
       nzOnOk: () => {
-        this.auth.delete();
-        this.router.navigate(['auth/login']);
+        this.auth.delete().then(() =>
+          this.router.navigate(['auth/login'])
+
+        );
       },
       nzCancelText: 'No',
       nzOnCancel: () => console.log('Cancel')
@@ -72,7 +78,6 @@ export class AppComponent {
         path: `user/${this.authQuery.getValue().uid}`,
         fileName: 'avatar',
         fileTypes: 'image/png,image/jpeg,image/gif,image/bmp',
-        disabled: this.accountVerified
       }
     });
 
