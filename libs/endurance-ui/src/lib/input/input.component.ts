@@ -27,11 +27,17 @@ export class InputComponent extends BaseControlValueAccessor<string> {
 
   @Input() type: string = null;
 
+  @Input() label: string = null;
+
+  @Input() class: string = null;
+
+  @Input() disabled = false;
+
   constructor() {
     super();
   }
 
-  valueChanged(value: string) {
+  valueChange(value: string) {
     this.value = value;
     this.onChange(this.value);
   }

@@ -6,6 +6,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 import { fal } from '@fortawesome/pro-light-svg-icons';
 import { far } from '@fortawesome/pro-regular-svg-icons';
 import { AlertComponent } from './alert/alert.component';
+import { AvatarComponent } from './avatar/avatar.component';
 import { ButtonComponent } from './button/button.component';
 import { CheckboxComponent } from './checkbox/checkbox.component';
 import { ControlErrorComponent } from './control-error/control-error.component';
@@ -20,9 +21,9 @@ import { NgZorroModule } from './ng-zorro-module';
 @NgModule({
   imports: [CommonModule, FontAwesomeModule, FormsModule, ReactiveFormsModule, NgZorroModule],
   // eslint-disable-next-line max-len
-  declarations: [ButtonComponent, InputComponent, CheckboxComponent, ImageUploadComponent, ImageComponent, AlertComponent, ControlErrorsDirective, FormSubmitDirective, ControlErrorComponent, ControlErrorContainerDirective],
+  declarations: [ButtonComponent, InputComponent, CheckboxComponent, ImageUploadComponent, ImageComponent, AlertComponent, ControlErrorsDirective, FormSubmitDirective, ControlErrorComponent, ControlErrorContainerDirective, AvatarComponent],
   // eslint-disable-next-line max-len
-  exports: [ButtonComponent, InputComponent, FontAwesomeModule, CheckboxComponent, NgZorroModule, ImageUploadComponent, ImageComponent, AlertComponent, ControlErrorsDirective, FormSubmitDirective, ControlErrorContainerDirective],
+  exports: [ButtonComponent, InputComponent, FontAwesomeModule, CheckboxComponent, NgZorroModule, ImageUploadComponent, ImageComponent, AlertComponent, ControlErrorsDirective, FormSubmitDirective, ControlErrorContainerDirective, AvatarComponent],
 })
 export class EnduranceUiModule {
   constructor(private library: FaIconLibrary, private faConfig: FaConfig) {

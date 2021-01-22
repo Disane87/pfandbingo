@@ -1,4 +1,4 @@
-<ng-container *ngIf="(loggedInAndMailVerified$ | async) as profile; else notLoggedIn">
+<ng-container *ngIf="(verifiedProfile$ | async) as profile; else notLoggedIn">
     <endurance-layout-main [photoUrl]="profile.photoURL" [userMenuActions]="userMenuActions">
     </endurance-layout-main>
 </ng-container>

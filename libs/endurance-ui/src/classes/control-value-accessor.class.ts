@@ -16,8 +16,9 @@ export class BaseControlValueAccessor<T> implements ControlValueAccessor {
     /**
      * Model -> View changes
      */
-    public writeValue(obj: T): void { this.value = obj; }
+    public writeValue(obj: T): void { this.value = obj; this.onChange(obj) }
     public registerOnChange(fn: any): void { this.onChange = fn; }
     public registerOnTouched(fn: any): void { this.onTouched = fn; }
     public setDisabledState?(isDisabled: boolean): void { this.disabled = isDisabled; }
+
 }
