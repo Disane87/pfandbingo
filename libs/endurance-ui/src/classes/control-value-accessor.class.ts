@@ -1,5 +1,5 @@
 import { Injectable, Input } from '@angular/core';
-import { ControlValueAccessor } from '@angular/forms';
+import { ControlValueAccessor, FormControl } from '@angular/forms';
 
 @Injectable()
 export class BaseControlValueAccessor<T> implements ControlValueAccessor {
@@ -20,5 +20,9 @@ export class BaseControlValueAccessor<T> implements ControlValueAccessor {
     public registerOnChange(fn: any): void { this.onChange = fn; }
     public registerOnTouched(fn: any): void { this.onTouched = fn; }
     public setDisabledState?(isDisabled: boolean): void { this.disabled = isDisabled; }
+
+    public validate(c: FormControl) {
+        // return c.validator(c);
+    }
 
 }

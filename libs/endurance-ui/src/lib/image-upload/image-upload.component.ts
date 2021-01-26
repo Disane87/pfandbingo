@@ -1,21 +1,15 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { AngularFireStorage } from '@angular/fire/storage';
 import { Guid } from 'guid-typescript';
-import { NzMessageService } from 'ng-zorro-antd/message';
-import { NzUploadChangeParam, NzUploadFile, NzUploadXHRArgs } from 'ng-zorro-antd/upload';
-import { Subject } from 'rxjs';
-import { last, switchMap, tap } from 'rxjs/operators';
-
+import { BehaviorSubject } from 'rxjs';
+import { EnduranceFile } from './interfaces/file.interface';
+export { EnduranceFile };
 @Component({
-  selector: 'pfandbingo-image-upload',
+  selector: 'eui-image-upload',
   templateUrl: './image-upload.component.html',
   styleUrls: ['./image-upload.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ImageUploadComponent {
-  uploading = false;
-  fileList: NzUploadFile[] = [];
-
   @Input() path = '';
   @Input() fileName = '';
 
@@ -27,60 +21,59 @@ export class ImageUploadComponent {
   @Input() disabled = false;
 
 
+  @Input() multiple = false;
+  @Input() directUpload = false;
+
+  @Input() showOnlyButton = false;
+
+
   @Output() fileUploaded = new EventEmitter<string>();
+  @Output() fileUpload = new EventEmitter<EnduranceFile[]>();
 
   @Output() progressChanged = new EventEmitter<number>();
 
 
+  public filesList: EnduranceFile[] = [];
 
+  public filesList$ = new BehaviorSubject<EnduranceFile[]>([]);
 
+  fileDropped(data: DataTransfer) {
+    if (data.files) {
+      this.filesChange(data.files);
+    }
+  }
 
-  uploadComplete$ = new Subject<string>();
+  delete(file: EnduranceFile) {
+    const deleteIndex = this.filesList.findIndex(fileListItem => fileListItem.id == file.id);
+    this.filesList.splice(deleteIndex, 1);
+    this.filesList$.next(this.filesList);
+  }
 
-  constructor(private msg: NzMessageService, private fireStorage: AngularFireStorage) { }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-
-  // disabled$ = this.authQuery.select('emailVerified');
-  customUploadReq = (item: NzUploadXHRArgs) => {
-    const fileName = Guid.create().toString(); //item.file.name;
-    const fileExtension = item.file.name.substr(item.file.name.lastIndexOf('.') + 1);
-    const uploadPath = `${this.path}/${fileName}.${fileExtension}`;
-
-    const upload = this.fireStorage.upload(uploadPath, item.file);
-    const fileRef = this.fireStorage.ref(uploadPath);
-    upload.percentageChanges().subscribe(percent => {
-      // this.msg.success('Upload pending ' + Math.trunc(percent) + '%');
-      item.onProgress({ percent: Math.trunc(percent) }, item.file)
-      this.progressChanged.emit(Math.trunc(percent))
-    })
-
-    upload.snapshotChanges().pipe(
-
-      last(),
-      tap(() => item.onSuccess('Complete', item.file, null)),
-      switchMap(() => fileRef.getDownloadURL()),
-      tap(downloadUrl => {
-        this.uploadComplete$.next(downloadUrl);
-        this.fileUploaded.emit(downloadUrl);
-        this.fileList = [];
+  filesChange(files: FileList) {
+    if (files.length > 0) {
+      Object.values(files).forEach(file => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (_event) => {
+          const newFile = {
+            id: Guid.create().toString(),
+            file,
+            inProgress: false,
+            localUrl: reader.result.toString(),
+            onProgress: new BehaviorSubject<number>(0),
+            onSuccess: new BehaviorSubject<boolean>(false)
+          };
+          this.filesList.push(newFile);
+          this.filesList$.next(this.filesList);
+        }
       })
-    ).subscribe()
-
-
-
-    return this.uploadComplete$;
-  }
-
-  handleChange(info: NzUploadChangeParam): void {
-    if (info.file.status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
-    if (info.file.status === 'done') {
-      this.msg.success(`${info.file.name} file uploaded successfully`);
-    } else if (info.file.status === 'error') {
-      this.msg.error(`${info.file.name} file upload failed.`);
     }
   }
+
+  upload(file: EnduranceFile) {
+    this.fileUpload.emit([file])
+  }
+
+  constructor() { }
 
 }

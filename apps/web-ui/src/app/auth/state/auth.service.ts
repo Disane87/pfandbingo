@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { TranslocoService } from '@ngneat/transloco';
 import { CollectionConfig, FireAuthService } from 'akita-ng-fire';
 import firebase from 'firebase';
-import { AuthState, AuthStore } from './auth.state';
+import { isEqual } from 'lodash-es';
+import { AuthState, AuthStore, Profile } from './auth.state';
 
 
 @Injectable({ providedIn: 'root' })
@@ -17,7 +18,14 @@ export class AuthService extends FireAuthService<AuthState> {
 
   createProfile(user: firebase.User): AuthState['profile'] {
     return { uid: user.uid, email: user.email, displayName: user.email, photoURL: '', language: this.transloco.getDefaultLang() };
+  }
 
+  updateProfile(profile: Partial<Profile>): Promise<any> {
+    if (!isEqual(this.store.getValue().profile, profile)) {
+      return this.update(profile);
+    }
+
+    return Promise.reject();
   }
 
 

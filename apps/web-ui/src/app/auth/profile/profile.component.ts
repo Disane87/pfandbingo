@@ -11,6 +11,8 @@ export class ProfileComponent implements OnInit {
 
   @Input() profile: Profile;
 
+
+
   constructor() { }
 
   ngOnInit(): void {

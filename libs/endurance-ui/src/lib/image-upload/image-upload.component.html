@@ -1,23 +1,48 @@
-<nz-upload nzType="drag" [nzDisabled]="disabled" [nzAccept]="fileTypes" [nzMultiple]="true" [nzFileType]="fileTypes"
-    [nzFileList]="fileList" [nzCustomRequest]="customUploadReq" (nzChange)="handleChange($event)">
-
-    <p class="ant-upload-drag-icon">
-        <i nz-icon nzType="picture"></i>
+<header class="flex flex-col items-center justify-center w-full py-12 border-2 border-gray-400 border-dashed"
+    dragAndDrop (dropped)="fileDropped($event)">
+    <p class="flex flex-wrap justify-center mb-3 font-semibold text-gray-900">
+        {{title}}
     </p>
-    <p class="p-3 ant-upload-text">
-
-        <ng-container *ngIf="!disabled">
-            {{title}}
-        </ng-container>
-
-    </p>
-    <p class="ant-upload-hint">
-        Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files
-    </p>
+    <input id="hidden-input" type="file" class="hidden" #fileInput (change)="filesChange($event.target.files)" />
 
 
-</nz-upload>
+    <ng-container *ngIf="(filesList$ | async) as filesList">
+        <button id="button"
+            class="px-3 py-1 mt-2 bg-gray-200 rounded-sm hover:bg-gray-300 focus:shadow-outline focus:outline-none"
+            (click)="filesList.length < 1 && !multiple ? fileInput.click() : null">
+            {{directUpload ? 'Upload' : 'Select'}} a file ({{filesList.length}})
+        </button>
 
-<ng-container *ngIf="disabled">
-    <!-- <pfandbingo-not-validated-alert></pfandbingo-not-validated-alert> -->
-</ng-container>
+        <ul class="w-full p-3 mt-3" *ngIf="filesList.length > 0">
+            <li class="flex flex-row px-3 py-3 list-none border rounded-sm" [class.border-b-0]="!last"
+                *ngFor="let file of filesList; let last = last">
+
+                <img class="object-cover w-8 h-8 mr-3" [src]="file.localUrl" />
+                <div class="flex flex-col w-full mr-3">
+
+                    <div>{{ file.file.name }}</div>
+                    <ng-container *ngIf="file.onProgress | async as progress">
+                        <eui-progress *ngIf="(file.onProgress | async) > 0 && (file.onProgress | async) < 100"
+                            [progress]="progress">
+                        </eui-progress>
+
+                    </ng-container>
+                </div>
+                <eui-button [disabled]="(file.onProgress | async) > 0 && (file.onProgress | async) < 100 "
+                    [loading]="(file.onProgress | async) > 0 && (file.onProgress | async) < 100"
+                    *ngIf="!directUpload && (file.onProgress | async) < 100" (click)="upload(file)">Upload
+                </eui-button>
+
+
+
+                <eui-button [color]="'red'"
+                    [disabled]="(file.onProgress | async) > 0 && (file.onProgress | async) < 100 "
+                    [loading]="(file.onProgress | async) > 0 && (file.onProgress | async) < 100"
+                    *ngIf="!directUpload && (file.onProgress | async) < 100" (click)="delete(file)">Delete
+                </eui-button>
+
+
+            </li>
+        </ul>
+    </ng-container>
+</header>

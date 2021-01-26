@@ -26,33 +26,34 @@
                 <!-- <form action="#" > -->
                 <div class="flex flex-col space-y-1">
                     <label for="email" class="text-sm font-semibold text-gray-500">E-Mailadresse</label>
-                    <pfandbingo-input preIcon="user" class="w-full" name="email" type="text" formControlName="email">
-                    </pfandbingo-input>
+                    <eui-input preIcon="user" class="w-full" name="email" type="text" formControlName="email">
+                    </eui-input>
                 </div>
                 <div class="flex flex-col space-y-1">
                     <div class="flex items-center justify-between">
                         <label for="password" class="text-sm font-semibold text-gray-500">Passwort</label>
 
                     </div>
-                    <pfandbingo-input preIcon="lock" class="w-full" name="password" type="password"
-                        formControlName="password">
-                    </pfandbingo-input>
+                    <eui-input preIcon="lock" class="w-full" name="password" type="password" formControlName="password">
+                    </eui-input>
                 </div>
 
 
                 <div class="inline-flex items-center w-full">
-                    <pfandbingo-checkbox name="remember" formControlName="remember" label="Vergiss mein nicht">
-                    </pfandbingo-checkbox>
+                    <eui-checkbox name="remember" formControlName="remember" label="Vergiss mein nicht">
+                    </eui-checkbox>
 
                     <a routerLink="auth/recover"
                         class="self-end ml-auto text-sm text-blue-600 self- hover:underline focus:text-blue-800 p-auto">Passwort
                         vergessen?</a>
                 </div>
                 <div>
-                    <pfandbingo-button [type]="'submit'" [title]="'Login'" [loading]="authPending$ | async"
-                        [disabled]="!validateForm.valid || (authPending$ | async)"></pfandbingo-button>
+                    <eui-button [type]="'submit'" [title]="'Login'" [loading]="authPending$ | async"
+                        [disabled]="!validateForm.valid || (authPending$ | async)">
+                    </eui-button>
                 </div>
-                <pfandbingo-auth-provider></pfandbingo-auth-provider>
+                <pfandbingo-auth-provider>
+                </pfandbingo-auth-provider>
             </form>
         </div>
     </div>

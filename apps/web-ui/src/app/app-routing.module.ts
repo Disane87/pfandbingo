@@ -4,6 +4,7 @@ import { AuthPipe, canActivate, emailVerified, redirectLoggedInTo, redirectUnaut
 import { RouterModule, Routes } from '@angular/router';
 import { pipe } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { TestPageComponent } from './dev/test-page/test-page.component';
 
 const redirectUnauthorizedToLogin = () => redirectUnauthorizedTo(['auth/login']);
 const redirectToStart = () => redirectLoggedInTo(['pfingo']);
@@ -23,6 +24,7 @@ const routes: Routes = [
         ...canActivate(redirectUnverified),
         loadChildren: () => import('./pfingo/pfingo.module').then(m => m.PfingoModule)
       },
+      { path: 'test', component: TestPageComponent },
       { path: '**', redirectTo: 'error/404' }
     ],
 

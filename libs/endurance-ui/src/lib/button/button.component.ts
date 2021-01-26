@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'pfandbingo-button',
+  selector: 'eui-button',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.css']
 })
@@ -11,7 +11,13 @@ export class ButtonComponent {
   @Input() loading: boolean;
   @Input() disabled: boolean;
 
+  @Input() color = 'blue';
+
   @Input() type = '';
+
+  @Input() shadow = true;
+
+  @Input() textColor = 'white';
 
   @Output() clicked = new EventEmitter<void>();
   click() {

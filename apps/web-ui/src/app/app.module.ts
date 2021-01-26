@@ -13,15 +13,17 @@ import { AkitaNgRouterStoreModule } from '@datorama/akita-ng-router-store';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EnduranceLayoutModule } from '@pfandbingo/endurance-layout';
+import { EnduranceUiModule } from '@pfandbingo/endurance-ui';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { TestPageComponent } from './dev/test-page/test-page.component';
 import { TranslocoRootModule } from './transloco/transloco-root.module';
 
 registerLocaleData(de);
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, TestPageComponent],
   imports: [BrowserModule, BrowserAnimationsModule, HttpClientModule, TranslocoRootModule,
     environment.production ? [] : AkitaNgDevtools.forRoot(),
     AppRoutingModule,
@@ -34,7 +36,8 @@ registerLocaleData(de);
     ReactiveFormsModule,
     TranslocoRootModule,
     FontAwesomeModule,
-    EnduranceLayoutModule
+    EnduranceLayoutModule,
+    EnduranceUiModule
 
   ],
   providers: [

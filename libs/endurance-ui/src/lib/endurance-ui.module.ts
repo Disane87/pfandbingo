@@ -13,17 +13,21 @@ import { ControlErrorComponent } from './control-error/control-error.component';
 import { ControlErrorContainerDirective } from './directives/control-error-container.directive';
 import { ControlErrorsDirective } from './directives/control-error.directive';
 import { FormSubmitDirective } from './directives/form-submit.directive';
-import { ImageUploadComponent } from './image-upload/image-upload.component';
+import { DropdownComponent } from './dropdown/dropdown.component';
+import { FlagComponent } from './flag/flag.component';
+import { EnduranceFile, ImageUploadComponent } from './image-upload/image-upload.component';
 import { ImageComponent } from './image/image.component';
 import { InputComponent } from './input/input.component';
 import { NgZorroModule } from './ng-zorro-module';
+import { ProgressComponent } from './progress/progress.component';
+import { DraganddropDirective } from './directives/draganddrop.directive';
 
 @NgModule({
   imports: [CommonModule, FontAwesomeModule, FormsModule, ReactiveFormsModule, NgZorroModule],
   // eslint-disable-next-line max-len
-  declarations: [ButtonComponent, InputComponent, CheckboxComponent, ImageUploadComponent, ImageComponent, AlertComponent, ControlErrorsDirective, FormSubmitDirective, ControlErrorComponent, ControlErrorContainerDirective, AvatarComponent],
+  declarations: [ButtonComponent, InputComponent, CheckboxComponent, ImageUploadComponent, ImageComponent, AlertComponent, ControlErrorsDirective, FormSubmitDirective, ControlErrorComponent, ControlErrorContainerDirective, AvatarComponent, DropdownComponent, FlagComponent, ProgressComponent, DraganddropDirective],
   // eslint-disable-next-line max-len
-  exports: [ButtonComponent, InputComponent, FontAwesomeModule, CheckboxComponent, NgZorroModule, ImageUploadComponent, ImageComponent, AlertComponent, ControlErrorsDirective, FormSubmitDirective, ControlErrorContainerDirective, AvatarComponent],
+  exports: [ButtonComponent, InputComponent, FontAwesomeModule, CheckboxComponent, NgZorroModule, ImageUploadComponent, ImageComponent, AlertComponent, ControlErrorsDirective, FormSubmitDirective, ControlErrorContainerDirective, AvatarComponent, DropdownComponent, FlagComponent, ProgressComponent, DraganddropDirective],
 })
 export class EnduranceUiModule {
   constructor(private library: FaIconLibrary, private faConfig: FaConfig) {
@@ -31,3 +35,5 @@ export class EnduranceUiModule {
     this.faConfig.defaultPrefix = 'far';
   }
 }
+
+export { EnduranceFile };

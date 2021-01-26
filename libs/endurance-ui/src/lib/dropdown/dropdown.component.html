@@ -1,0 +1,63 @@
+<!-- This example requires Tailwind CSS v2.0+ -->
+<div class="flex flex-col w-100" [class.opacity-50]="disabled">
+    <label [for]="name" class="mb-2 text-sm font-semibold text-gray-500" *ngIf="label">{{label}}</label>
+    <eui-button [shadow]="false" [color]="color" [textColor]="textColor" (click)="opened = !opened">
+        <div class="flex flex-row w-100">
+            <div class="w-full">{{selectedItem?.display || 'None'}}</div>
+            <fa-icon icon="chevron-down" *ngIf="items.length > 0"></fa-icon>
+        </div>
+
+    </eui-button>
+    <div class="relative inline-block text-left">
+        <!-- <button type="button" (click)="opened"
+            class="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+            id="options-menu" aria-haspopup="true" aria-expanded="true">
+            Options
+            <svg class="w-5 h-5 ml-2 -mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                aria-hidden="true">
+                <path fill-rule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                    clip-rule="evenodd" />
+
+                   
+            </svg>
+        </button> -->
+
+
+
+        <!--
+    Dropdown panel, show/hide based on dropdown state.
+
+    Entering: "transition ease-out duration-100"
+      From: "transform opacity-0 scale-95"
+      To: "transform opacity-100 scale-100"
+    Leaving: "transition ease-in duration-75"
+      From: "transform opacity-100 scale-100"
+      To: "transform opacity-0 scale-95"
+  -->
+        <div *ngIf="opened && items.length > 0"
+            class="absolute right-0 z-10 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5"
+            role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
+            <div class="flex flex-col h-100">
+                <!--  text-sm -->
+                <div [class.px-4]="!itemTemplate" [class.py-2]="!itemTemplate"
+                    class="text-gray-700 rounded cursor-pointer h-100 hover:bg-gray-100 hover:text-gray-900"
+                    [class.bg-blue-500]="item.value == selectedItemKey" [class.shadow]="item.value == selectedItemKey"
+                    role="menuitem" *ngFor="let item of items"
+                    (click)="selectedItem = item; selectedItemKey = item.value; opened = false">
+                    <ng-container *ngIf="itemTemplate; else noItemTemplate">
+                        <ng-content *ngTemplateOutlet="itemTemplate; context: {
+                        $implicit: item,
+                        active: item.value == selectedItemKey
+                    }"></ng-content>
+                    </ng-container>
+                    <ng-template #noItemTemplate>
+                        {{item.display}}
+                    </ng-template>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

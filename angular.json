@@ -21,7 +21,8 @@
               "apps/web-ui/src/assets"
             ],
             "styles": [
-              "apps/web-ui/src/styles.scss"
+              "apps/web-ui/src/styles.scss",
+              "./node_modules/flag-icon-css/css/flag-icon.min.css"
             ],
             "scripts": [],
             "customWebpackConfig": {
@@ -132,7 +133,7 @@
       "projectType": "library",
       "root": "libs/endurance-ui",
       "sourceRoot": "libs/endurance-ui/src",
-      "prefix": "pfandbingo",
+      "prefix": "endurance-ui",
       "architect": {
         "lint": {
           "builder": "@nrwl/linter:eslint",

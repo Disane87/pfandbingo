@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { PersistState } from '@datorama/akita';
 import { UserMenuAction } from '@pfandbingo/endurance-layout';
 import { ImageUploadComponent } from '@pfandbingo/endurance-ui';
-import { isEqual } from 'lodash-es';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { ProfileComponent } from './auth/profile/profile.component';
@@ -76,7 +75,7 @@ export class AppComponent {
 
   openProfile() {
     const profile = this.authQuery.getValue().profile;
-    const profileRef = this.modal.create({
+    this.modal.create({
       nzTitle: `Profile of ${profile.displayName}`,
       nzContent: ProfileComponent,
       nzViewContainerRef: this.viewContainerRef,
@@ -84,11 +83,8 @@ export class AppComponent {
         profile: { ...profile }
       },
       nzOnOk: (component) => {
-        if (!isEqual(this.authQuery.getValue().profile, component.profile)) {
-          this.auth.update(component.profile).then(done => {
-            this.msg.info('Profile successfully updated');
-          });
-        }
+        this.auth.updateProfile(component.profile).then(() => this.msg.info('Profile successfully updated'));
+
       },
       nzOkText: 'Save',
       nzOkType: 'primary',
@@ -112,7 +108,7 @@ export class AppComponent {
 
     const uploadModalComponent = uploadModal.getContentComponent();
 
-    uploadModalComponent.uploadComplete$.subscribe(uploadUrl => {
+    uploadModalComponent.fileUpload.subscribe(uploadUrl => {
       this.auth.update({ photoURL: uploadUrl }).then();
       this.auth.sync();
       uploadModal.close();

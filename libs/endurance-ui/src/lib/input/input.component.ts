@@ -1,15 +1,20 @@
 import { ChangeDetectionStrategy, Component, forwardRef, Input } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BaseControlValueAccessor } from '../../classes/control-value-accessor.class';
 
 @Component({
-  selector: 'pfandbingo-input',
+  selector: 'eui-input',
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InputComponent),
+      multi: true
+    },
+    {
+      provide: NG_VALIDATORS,
       useExisting: forwardRef(() => InputComponent),
       multi: true
     }
@@ -33,8 +38,16 @@ export class InputComponent extends BaseControlValueAccessor<string> {
 
   @Input() disabled = false;
 
+  public typeBeforeChange: string = null;
+
   constructor() {
     super();
+  }
+
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.typeBeforeChange = this.type;
   }
 
   valueChange(value: string) {

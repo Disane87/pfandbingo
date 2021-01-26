@@ -1,5 +1,6 @@
-<button [type]="type" [disabled]="disabled" (click)="click()"
-    class="flex w-full px-4 py-2 text-lg font-semibold text-white transition-colors duration-300 bg-blue-500 rounded-md shadow disabled:opacity-50 hover:bg-blue-600 focus:outline-none focus:ring-blue-200 focus:ring-4">
+<!-- text-lg font-semibold  -->
+<button [type]="type" [disabled]="disabled" (click)="click()" [class.shadow]="shadow"
+    class="flex w-full px-4 py-2 text-{{textColor}} transition-colors duration-300 bg-{{color}}-500 rounded  disabled:opacity-50 hover:bg-{{color}}-600 focus:outline-none focus:ring-{{color}}-200 focus:ring-4 duration-300 border border-gray-300 rounded">
     <svg class="w-5 h-5 mt-1 mr-3 -ml-1 text-white animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none"
         viewBox="0 0 24 24" *ngIf="loading">
         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
