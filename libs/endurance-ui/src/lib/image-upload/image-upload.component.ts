@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, Renderer2 } from '@angular/core';
 import { Guid } from 'guid-typescript';
 import { BehaviorSubject } from 'rxjs';
 import { EnduranceFile } from './interfaces/file.interface';
@@ -37,6 +37,10 @@ export class ImageUploadComponent {
 
   public filesList$ = new BehaviorSubject<EnduranceFile[]>([]);
 
+
+  constructor(private renderer: Renderer2) { }
+
+
   fileDropped(data: DataTransfer) {
     if (data.files) {
       this.filesChange(data.files);
@@ -73,7 +77,5 @@ export class ImageUploadComponent {
   upload(file: EnduranceFile) {
     this.fileUpload.emit([file])
   }
-
-  constructor() { }
 
 }

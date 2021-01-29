@@ -1,14 +1,9 @@
 {
   "npmScope": "pfandbingo",
-  "affected": {
-    "defaultBase": "master"
-  },
+  "affected": { "defaultBase": "master" },
   "implicitDependencies": {
     "angular.json": "*",
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
-    },
+    "package.json": { "dependencies": "*", "devDependencies": "*" },
     "tsconfig.base.json": "*",
     "tslint.json": "*",
     ".eslintrc.json": "*",
@@ -18,23 +13,21 @@
     "default": {
       "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
-        "cacheableOperations": ["build", "lint", "test", "e2e"]
+        "cacheableOperations": [
+          "build",
+          "lint",
+          "test",
+          "e2e",
+          "build-storybook"
+        ]
       }
     }
   },
   "projects": {
-    "web-ui": {
-      "tags": []
-    },
-    "web-ui-e2e": {
-      "tags": [],
-      "implicitDependencies": ["web-ui"]
-    },
-    "endurance-ui": {
-      "tags": []
-    },
-    "endurance-layout": {
-      "tags": []
-    }
+    "web-ui": { "tags": [] },
+    "web-ui-e2e": { "tags": [], "implicitDependencies": ["web-ui"] },
+    "endurance-ui": { "tags": [] },
+    "endurance-layout": { "tags": [] },
+    "endurance-ui-e2e": { "tags": [], "implicitDependencies": ["endurance-ui"] }
   }
 }

@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 
 @Component({
+  selector: 'eui-control-error',
   templateUrl: './control-error.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./control-error.component.scss']
